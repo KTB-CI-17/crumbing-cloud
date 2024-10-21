@@ -3,3 +3,6 @@
 
 # 인텔리제이의 프로젝트 별 세팅 파일
 .idea
+
+# Terraform
+/terraform-C/terraform_output.json
