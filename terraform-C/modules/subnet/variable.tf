@@ -3,8 +3,7 @@ variable "vpc_id" {
   type        = string
 }
 
-
-variable "fe_subnet" {
+variable "subnet_fe" {
   description = "프론트 서브넷"
   type = object({
     cidr = string
@@ -13,7 +12,7 @@ variable "fe_subnet" {
   })
 }
 
-variable "be_subnet" {
+variable "subnet_be" {
   description = "백 서브넷"
   type = object({
     cidr = string

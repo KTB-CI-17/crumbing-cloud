@@ -1,39 +1,30 @@
-resource "aws_instance" "ktb-cruming-public-instance" {
-  count                  = var.instance_public_count
+resource "aws_instance" "modules_instance_public" {
+  for_each = var.public_instances
+
   ami                    = var.ami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  subnet_id              = var.temp_subnet_id
-  associate_public_ip_address = true
-  vpc_security_group_ids = [var.fe_security_group_id]
+  subnet_id              = each.value.subnet_id
+  vpc_security_group_ids = each.value.security_group_ids
+  associate_public_ip_address = each.value.associate_public_ip
 
   tags = {
-    Name = "temp_instance"
+    Name = each.value.instance_name
   }
 }
 
-resource "aws_instance" "ktb-cruming-private-instance_fe" {
-  count                  = var.instance_private_count
+resource "aws_instance" "modules_instance_private" {
+  for_each = var.private_instances
+
   ami                    = var.ami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  subnet_id              = var.fe_subnet_id
-  vpc_security_group_ids = [var.fe_security_group_id]
+  subnet_id              = each.value.subnet_id
+  vpc_security_group_ids = each.value.security_group_ids
+
+  associate_public_ip_address = false
 
   tags = {
-    Name = var.public_name
-  }
-}
-
-resource "aws_instance" "ktb-cruming-private-instance_be" {
-  count                  = var.instance_private_count
-  ami                    = var.ami
-  instance_type          = var.instance_type
-  key_name               = var.key_name
-  subnet_id              = var.be_subnet_id
-  vpc_security_group_ids = [var.be_security_group_id]
-
-  tags = {
-    Name = var.private_name
+    Name = each.value.instance_name
   }
 }

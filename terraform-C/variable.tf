@@ -27,7 +27,7 @@ variable "igw_name" {
 
 
 # Subnet
-variable "fe_subnet" {
+variable "subnet_fe" {
   description = "프론트 서브넷"
   type = object({
     cidr = string
@@ -36,7 +36,7 @@ variable "fe_subnet" {
   })
 }
 
-variable "be_subnet" {
+variable "subnet_be" {
   description = "백 서브넷"
   type = object({
     cidr = string
@@ -53,12 +53,10 @@ variable "nat_name" {
   type        = string
 }
 
-variable "fe_route_table_name" {
-  description = "퍼블릭 라우트 테이블 이름"
-  type        = string
-}
 
-variable "be_route_table_name" {
+
+# Route Table
+variable "route_table_private_name" {
   description = "프라이빗 라우트 테이블 이름"
   type        = string
 }
@@ -66,12 +64,12 @@ variable "be_route_table_name" {
 
 
 # Security Group
-variable "sg_name_fe" {
+variable "sg_fe_name" {
   description = "프론트 보안 그룹 이름"
   type        = string
 }
 
-variable "sg_name_be" {
+variable "sg_be_name" {
   description = "백 보안 그룹 이름"
   type        = string
 }
@@ -95,7 +93,6 @@ variable "ingress_be" {
     cidr_blocks = list(string)
   }))
 }
-
 
 variable "egress" {
   description = "이그레스 규칙"
@@ -137,12 +134,12 @@ variable "instance_private_count" {
   type        = number
 }
 
-variable "fe_instance_name" {
+variable "instance_fe_name" {
   description = "프론트 인스턴스 이름"
   type        = string
 }
 
-variable "be_instance_name" {
+variable "instance_be_name" {
   description = "백 인스턴스 이름"
   type        = string
 }

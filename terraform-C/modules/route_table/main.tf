@@ -1,4 +1,4 @@
-resource "aws_route_table" "modules_public_rt" {
+resource "aws_route_table" "modules_rt_public" {
   vpc_id = var.vpc_id
 
   route {
@@ -7,34 +7,33 @@ resource "aws_route_table" "modules_public_rt" {
   }
 
   tags = {
-    Name = "ktb-cruming-temp-rt"
+    Name = "ktb-cruming-rt"
   }
 }
 
-resource "aws_route_table_association" "modules_public_rta" {
-  subnet_id      = var.temp_subnet_id
-  route_table_id = aws_route_table.modules_public_rt.id
+resource "aws_route_table_association" "modules_rta_public" {
+  subnet_id      = var.subnet_temp_id
+  route_table_id = aws_route_table.modules_rt_public.id
 }
 
-resource "aws_route_table" "modules_private_rt" {
+resource "aws_route_table" "modules_rt_private" {
   vpc_id = var.vpc_id
 
   route {
-    cidr_block    = "0.0.0.0/0"
-    nat_gateway_id = var.nat_gateway_id
+    cidr_block      = "0.0.0.0/0"
+    nat_gateway_id  = var.nat_id
   }
 
   tags = {
-    Name = "ktb-cruming-private-rt"
+    Name = var.route_table_private_name
   }
 }
 
-resource "aws_route_table_association" "fe_private" {
-  subnet_id     = var.fe_subnet_id
-  route_table_id = aws_route_table.modules_private_rt.id
-}
-
-resource "aws_route_table_association" "fe_private" {
-  subnet_id     = var.be_subnet_id
-  route_table_id = aws_route_table.modules_private_rt.id
+resource "aws_route_table_association" "modules_rta_private" {
+  for_each = {
+    fe_subnet_id = var.subnet_fe_id
+    be_subnet_id = var.subnet_be_id
+  }
+  subnet_id       = each.value
+  route_table_id  = aws_route_table.modules_rt_private.id
 }

@@ -1,4 +1,4 @@
-variable "temp_subnet_id" {
+variable "subnet_temp_id" {
   description = "임시 서브넷의 ID"
   type        = string
 }

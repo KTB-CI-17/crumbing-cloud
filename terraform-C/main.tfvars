@@ -8,36 +8,36 @@ vpc_name = "ktb_cruming_vpc"
 
 
 # Internet Gateway
-igw_name = "ktb-cruming-igw"
+igw_name = "ktb_cruming_igw"
 
 
 # Subnet
-fe_subnet = {
+subnet_fe = {
     cidr = "192.168.2.0/24"
     az   = "ap-northeast-2a"
-    name = "ktb_cruming_fe_subnet"
+    name = "ktb_cruming_subnet_fe"
 }
 
-be_subnet = {
+subnet_be = {
     cidr = "192.168.3.0/24"
     az   = "ap-northeast-2c"
-    name = "ktb_cruming_be_subnet"
+    name = "ktb_cruming_subnet_be"
 }
 
 
 # Nat Gateway
-nat_name = "ktb-cruming-nat"
+nat_name = "ktb_cruming_nat"
 
 
 
 # Route Table
-fe_route_table_name  = "ktb-cruming-fe-rt"
-be_route_table_name = "ktb-cruming-be-rt"
+route_table_private_name = "ktb_cruming_rt_private"
+
 
 
 # Security Group
-sg_name_fe = "ktb-cruming-sg_fe"
-sg_name_be = "ktb-cruming-sg_be"
+sg_fe_name = "ktb_cruming_sg_fe"
+sg_be_name = "ktb_cruming_sg_be"
 
 ingress_fe = [
   {
@@ -97,12 +97,12 @@ egress = {
 
 
 # Instance
-ami                    = "ami-062cf18d655c0b1e8"
-instance_type          = "t3.medium"
-key_name               = "ktb-cruming-key"
+ami           = "ami-062cf18d655c0b1e8"
+instance_type = "t3.medium"
+key_name      = "ktb-cruming-key"
 
 instance_public_count  = 1
 instance_private_count = 2
 
-fe_instance_name = "ktb-cruming-fe"
-be_instance_name = "ktb-cruming-be"
+instance_fe_name = "ktb_cruming_fe"
+instance_be_name = "ktb_cruming_be"

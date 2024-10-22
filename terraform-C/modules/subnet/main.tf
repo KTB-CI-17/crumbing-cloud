@@ -1,26 +1,26 @@
-resource "aws_subnet" "fe_subnet" {
+resource "aws_subnet" "modules_subnet_fe" {
   vpc_id                  = var.vpc_id
-  cidr_block              = var.fe_subnet.cidr
-  availability_zone       = var.fe_subnet.az
+  cidr_block              = var.subnet_fe.cidr
+  availability_zone       = var.subnet_fe.az
   map_public_ip_on_launch = false
 
   tags = {
-    Name = var.fe_subnet.name
+    Name = var.subnet_fe.name
   }
 }
 
-resource "aws_subnet" "be_subnet" {
+resource "aws_subnet" "modules_subnet_be" {
   vpc_id                  = var.vpc_id
-  cidr_block              = var.be_subnet.cidr
-  availability_zone       = var.be_subnet.az
+  cidr_block              = var.subnet_be.cidr
+  availability_zone       = var.subnet_be.az
   map_public_ip_on_launch = false
 
   tags = {
-    Name = var.be_subnet.name
+    Name = var.subnet_be.name
   }
 }
 
-resource "aws_subnet" "temp_subnet" {
+resource "aws_subnet" "modules_subnet_temp" {
   vpc_id                  = var.vpc_id
   cidr_block              = "192.168.10.0/24"
   availability_zone       = "ap-northeast-2a"

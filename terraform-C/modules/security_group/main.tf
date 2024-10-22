@@ -1,4 +1,4 @@
-resource "aws_security_group" "ktb-cruming-sg-FE" {
+resource "aws_security_group" "modules_sg_fe" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
@@ -23,7 +23,7 @@ resource "aws_security_group" "ktb-cruming-sg-FE" {
   }
 }
 
-resource "aws_security_group" "ktb-cruming-sg-BE" {
+resource "aws_security_group" "modules_sg_be" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {

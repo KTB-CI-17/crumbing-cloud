@@ -1,4 +1,4 @@
-resource "aws_eip" "modules-eip" {
+resource "aws_eip" "modules_eip" {
   domain = "vpc"
 
   tags = {
@@ -6,9 +6,9 @@ resource "aws_eip" "modules-eip" {
   }
 }
 
-resource "aws_nat_gateway" "modules-nat" {
-  allocation_id = aws_eip.modules-eip.id
-  subnet_id     = var.temp_subnet_id
+resource "aws_nat_gateway" "modules_nat" {
+  allocation_id = aws_eip.modules_eip.id
+  subnet_id     = var.subnet_temp_id
 
   tags = {
     Name = var.name

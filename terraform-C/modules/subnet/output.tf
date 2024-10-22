@@ -1,14 +1,14 @@
-output "fe_subnet_id" {
+output "subnet_fe_id" {
   description = "프론트 서브넷 ID"
-  value       = aws_subnet.fe_subnet
+  value       = aws_subnet.modules_subnet_fe.id
 }
 
-output "be_subnet_id" {
+output "subnet_be_id" {
   description = "백 서브넷 ID"
-  value       = aws_subnet.be_subnet.id
+  value       = aws_subnet.modules_subnet_be.id
 }
 
-output "temp_subnet_id" {
+output "subnet_temp_id" {
   description = "백 서브넷 ID"
-  value       = aws_subnet.temp_subnet.id
+  value       = aws_subnet.modules_subnet_temp.id
 }
