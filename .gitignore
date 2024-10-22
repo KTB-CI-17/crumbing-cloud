@@ -7,3 +7,4 @@
 # Terraform
 /terraform-C/terraform_output.json
 /terraform-C/.terraform.lock.hcl
+/terraform-C/.terraform
