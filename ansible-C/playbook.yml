@@ -1,0 +1,12 @@
+---
+- hosts: frontend
+  vars_files:
+    - frontend/vars.yml
+  tasks:
+    - import_tasks: frontend/tasks.yml
+
+- hosts: backend
+  vars_files:
+    - backend/vars.yml
+  tasks:
+    - import_tasks: backend/tasks.yml
