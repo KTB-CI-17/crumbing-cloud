@@ -143,3 +143,13 @@ variable "instance_be_name" {
   description = "백 인스턴스 이름"
   type        = string
 }
+
+variable "s3_app_name" {
+  description = "앱 전용 s3 이름"
+  type        = string
+}
+
+variable "s3_terraform_name" {
+  description = "테라폼 전용 s3 이름"
+  type        = string
+}

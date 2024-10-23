@@ -106,3 +106,7 @@ instance_private_count = 2
 
 instance_fe_name = "ktb_cruming_fe"
 instance_be_name = "ktb_cruming_be"
+
+# S3
+s3_app_name = "ktb_cruming_app"
+s3_terraform_name = "ktb_cruming_terraform"
