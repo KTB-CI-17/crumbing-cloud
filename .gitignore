@@ -9,3 +9,6 @@
 /terraform-C/.terraform.lock.hcl
 /terraform-C/.terraform
 /terraform-C/planfile
+
+terraform-C/terraform.tfstate
+terraform-C/terraform.tfstate.backup
