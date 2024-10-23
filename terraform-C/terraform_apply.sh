@@ -1,6 +1,11 @@
 #!/bin/bash
 
-terraform apply -auto-approve -var-file="main.tfvars"
+if [ ! -f "planfile" ]; then
+  echo "Error: Planfile does not exist. Run terraform_plan.sh first."
+  exit 1
+fi
+
+terraform apply -auto-approve planfile
 terraform output -json > terraform_output.json
 
 public_ip=$(jq -r '.["ktb-cruming-public-instance"].value.ip[0]' terraform_output.json)
