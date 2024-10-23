@@ -1,18 +1,24 @@
 #!/bin/bash
 
-if [ ! -f "planfile" ]; then
-  echo "Error: Planfile does not exist. Run terraform_plan.sh first."
+terraform init
+terraform validate
+terraform plan -var-file="main.tfvars" -out=planfile
+
+if [ $? -ne 0 ]; then
+  echo "Error: Terraform plan failed."
   exit 1
 fi
 
 terraform apply -auto-approve planfile
 terraform output -json > terraform_output.json
 
-public_ip=$(jq -r '.["ktb-cruming-public-instance"].value.ip[0]' terraform_output.json)
-private_ip=$(jq -r '.["ktb-cruming-private-instance"].value.ip[0]' terraform_output.json)
+temp_ip=$(jq -r '.["ktb_cruming_public_instance"].value.ip[0]' terraform_output.json)
+back_ip=$(jq -r '.["ktb_cruming_private_instance"].value.ip[0]' terraform_output.json)
+front_ip=$(jq -r '.["ktb_cruming_private_instance"].value.ip[1]' terraform_output.json)
 
-echo "Public IP: $public_ip"
-echo "Private IP: $private_ip"
+echo "temp ip: $temp_ip"
+echo "front ip: $front_ip"
+echo "back ip: $back_ip"
 
 cd ../ansible-C
 
@@ -23,10 +29,11 @@ fi
 
 cat <<EOF > hosts.ini
 [frontend]
-$public_ip
+$temp_ip
+$front_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/My/ktb/project/cruming/source/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/My/ktb/project/cruming/source/ktb-cruming-key.pem ubuntu@$temp_ip"'
 
 [backend]
-$private_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/My/ktb/project/cruming/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/My/ktb/project/cruming/ktb-cruming-key.pem ubuntu@$public_ip"'
+$back_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/My/ktb/project/cruming/source/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/My/ktb/project/cruming/source/ktb-cruming-key.pem ubuntu@$temp_ip"'
 EOF
 
 echo "hosts.ini 파일이 ../ansible 디렉토리에 생성되었습니다."
