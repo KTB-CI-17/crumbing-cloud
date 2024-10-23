@@ -27,6 +27,6 @@ resource "aws_subnet" "modules_subnet_temp" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "ktb_cruming_temp_subnet"
+    Name = "ktb_cruming_subnet_temp"
   }
 }

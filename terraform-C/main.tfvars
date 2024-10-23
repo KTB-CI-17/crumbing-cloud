@@ -4,40 +4,40 @@ region = "ap-northeast-2"
 
 # VPC
 vpc_cidr = "192.168.0.0/16"
-vpc_name = "ktb_cruming_vpc"
+vpc_name = "ktb-cruming-vpc"
 
 
 # Internet Gateway
-igw_name = "ktb_cruming_igw"
+igw_name = "ktb-cruming-igw"
 
 
 # Subnet
 subnet_fe = {
     cidr = "192.168.2.0/24"
     az   = "ap-northeast-2a"
-    name = "ktb_cruming_subnet_fe"
+    name = "ktb-cruming-subnet-fe"
 }
 
 subnet_be = {
     cidr = "192.168.3.0/24"
     az   = "ap-northeast-2c"
-    name = "ktb_cruming_subnet_be"
+    name = "ktb-cruming-subnet-be"
 }
 
 
 # Nat Gateway
-nat_name = "ktb_cruming_nat"
+nat_name = "ktb-cruming-nat"
 
 
 
 # Route Table
-route_table_private_name = "ktb_cruming_rt_private"
+route_table_private_name = "ktb-cruming-rt-private"
 
 
 
 # Security Group
-sg_fe_name = "ktb_cruming_sg_fe"
-sg_be_name = "ktb_cruming_sg_be"
+sg_fe_name = "ktb-cruming-sg-fe"
+sg_be_name = "ktb-cruming-sg-be"
 
 ingress_fe = [
   {
@@ -104,9 +104,9 @@ key_name      = "ktb-cruming-key"
 instance_public_count  = 1
 instance_private_count = 2
 
-instance_fe_name = "ktb_cruming_fe"
-instance_be_name = "ktb_cruming_be"
+instance_fe_name = "ktb-cruming-fe"
+instance_be_name = "ktb-cruming-be"
 
 # S3
-s3_app_name = "ktb_cruming_app"
-s3_terraform_name = "ktb_cruming_terraform"
+s3_app_name = "ktb-cruming-app"
+s3_terraform_name = "ktb-cruming-terraform"

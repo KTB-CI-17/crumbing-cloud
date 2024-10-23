@@ -59,7 +59,7 @@ module "instance" {
     temp = {
       subnet_id           = module.subnet.subnet_temp_id
       security_group_ids  = [module.security_group.sg_fe_id]
-      instance_name       = "temp_instance"
+      instance_name       = "ktb-cruming-temp"
       associate_public_ip = true
     }
   }
