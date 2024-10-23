@@ -109,4 +109,3 @@ instance_be_name = "ktb-cruming-be"
 
 # S3
 s3_app_name = "ktb-cruming-app"
-s3_terraform_name = "ktb-cruming-terraform"

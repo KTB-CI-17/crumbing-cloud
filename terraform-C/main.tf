@@ -83,6 +83,5 @@ module "s3" {
 
   bucket_names  = {
     app = var.s3_app_name
-    terraform = var.s3_terraform_name
   }
 }
