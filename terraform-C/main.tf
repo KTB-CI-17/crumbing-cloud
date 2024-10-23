@@ -1,3 +1,15 @@
+terraform {
+  backend "s3" {
+    bucket          = "ktb-cruming-terraform"
+    key             = "terraform.tfstate"
+    region          = "ap-northeast-2"
+    dynamodb_table  = "terraform-lock-table"
+    encrypt         = true
+    profile         = "ktb-cruming"
+    versioning      = true
+  }
+}
+
 provider "aws" {
   region  = var.region
   profile = "ktb-cruming"
