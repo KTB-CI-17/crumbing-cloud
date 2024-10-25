@@ -30,10 +30,6 @@ resource "aws_route_table" "modules_rt_private" {
 }
 
 resource "aws_route_table_association" "modules_rta_private" {
-  for_each = {
-    ai_subnet_id = var.subnet_ai_id
-    cloud_subnet_id = var.subnet_cloud_id
-  }
-  subnet_id       = each.value
+  subnet_id       = var.subnet_ai_id
   route_table_id  = aws_route_table.modules_rt_private.id
 }
