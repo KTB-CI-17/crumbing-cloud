@@ -6,7 +6,7 @@ terraform {
     dynamodb_table  = "terraform-lock-table"
     encrypt         = true
     profile         = "ktb-cruming"
-    versioning      = true
+#     versioning      = true
   }
 }
 
@@ -32,6 +32,8 @@ module "subnet" {
   vpc_id    = module.vpc.vpc_id
   subnet_fe = var.subnet_fe
   subnet_be = var.subnet_be
+  subnet_ai = var.subnet_ai
+  subnet_cloud = var.subnet_cloud
 }
 
 module "nat_gateway" {
@@ -48,6 +50,8 @@ module "route_table" {
   subnet_temp_id            = module.subnet.subnet_temp_id
   subnet_fe_id              = module.subnet.subnet_fe_id
   subnet_be_id              = module.subnet.subnet_be_id
+  subnet_ai_id              = module.subnet.subnet_ai_id
+  subnet_cloud_id           = module.subnet.subnet_cloud_id
   route_table_private_name  = var.route_table_private_name
 }
 
@@ -58,6 +62,10 @@ module "security_group" {
   ingress_fe  = var.ingress_fe
   name_be     = var.sg_be_name
   ingress_be  = var.ingress_be
+  name_ai     = var.sg_ai_name
+  ingress_ai  = var.ingress_ai
+  name_cloud     = var.sg_cloud_name
+  ingress_cloud  = var.ingress_cloud
   egress      = var.egress
 }
 
@@ -68,9 +76,15 @@ module "instance" {
   key_name      = var.key_name
 
   public_instances = {
-    temp = {
-      subnet_id           = module.subnet.subnet_temp_id
-      security_group_ids  = [module.security_group.sg_fe_id]
+#     temp = {
+#       subnet_id           = module.subnet.subnet_temp_id
+#       security_group_ids  = [module.security_group.sg_fe_id]
+#       instance_name       = "ktb-cruming-temp"
+#       associate_public_ip = true
+#     }
+    cloud = {
+      subnet_id           = module.subnet.subnet_cloud_id
+      security_group_ids  = [module.security_group.sg_cloud_id]
       instance_name       = "ktb-cruming-temp"
       associate_public_ip = true
     }
@@ -86,6 +100,11 @@ module "instance" {
       subnet_id          = module.subnet.subnet_be_id
       security_group_ids = [module.security_group.sg_be_id]
       instance_name      = var.instance_be_name
+    }
+    ai = {
+      subnet_id           = module.subnet.subnet_ai_id
+      security_group_ids  = [module.security_group.sg_ai_id]
+      instance_name       = var.instance_ai_name
     }
   }
 }
