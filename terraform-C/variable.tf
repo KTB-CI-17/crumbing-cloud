@@ -45,6 +45,24 @@ variable "subnet_be" {
   })
 }
 
+# Subnet
+variable "subnet_ai" {
+  description = "ai 서브넷"
+  type = object({
+    cidr = string
+    az   = string
+    name = string
+  })
+}
+
+variable "subnet_cloud" {
+  description = "클라우드 서브넷"
+  type = object({
+    cidr = string
+    az   = string
+    name = string
+  })
+}
 
 
 # Nat Gateway
@@ -74,6 +92,16 @@ variable "sg_be_name" {
   type        = string
 }
 
+variable "sg_ai_name" {
+  description = "ai 보안 그룹 이름"
+  type        = string
+}
+
+variable "sg_cloud_name" {
+  description = "클라우드 보안 그룹 이름"
+  type        = string
+}
+
 variable "ingress_fe" {
   description = "프론트 인그레스 규칙"
   type = list(object({
@@ -86,6 +114,26 @@ variable "ingress_fe" {
 
 variable "ingress_be" {
   description = "백 인그레스 규칙"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
+variable "ingress_ai" {
+  description = "ai 인그레스 규칙"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
+variable "ingress_cloud" {
+  description = "클라우드 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -143,6 +191,17 @@ variable "instance_be_name" {
   description = "백 인스턴스 이름"
   type        = string
 }
+
+variable "instance_ai_name" {
+  description = "ai 인스턴스 이름"
+  type        = string
+}
+
+variable "instance_cloud_name" {
+  description = "클라우드 인스턴스 이름"
+  type        = string
+}
+
 
 variable "s3_app_name" {
   description = "앱 전용 s3 이름"
