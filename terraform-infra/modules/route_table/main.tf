@@ -12,7 +12,7 @@ resource "aws_route_table" "modules_rt_public" {
 }
 
 resource "aws_route_table_association" "modules_rta_public" {
-  subnet_id      = var.subnet_temp_id
+  subnet_id      = var.subnet_cloud_id
   route_table_id = aws_route_table.modules_rt_public.id
 }
 
@@ -33,6 +33,7 @@ resource "aws_route_table_association" "modules_rta_private" {
   for_each = {
     fe_subnet_id = var.subnet_fe_id
     be_subnet_id = var.subnet_be_id
+    ai_subnet_id = var.subnet_ai_id
   }
   subnet_id       = each.value
   route_table_id  = aws_route_table.modules_rt_private.id
