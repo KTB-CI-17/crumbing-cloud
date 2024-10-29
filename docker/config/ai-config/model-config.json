@@ -1,0 +1,11 @@
+{
+  "model_name": "temp_ai_model",
+  "version": "1.0",
+  "parameters": {
+    "learning_rate": 0.001,
+    "batch_size": 32,
+    "num_epochs": 50
+  },
+  "input_shape": [224, 224, 3],
+  "output_classes": 10
+}
