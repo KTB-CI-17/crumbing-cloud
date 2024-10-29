@@ -21,6 +21,19 @@ RUN if [ "$SERVER_TYPE" = "backend" ]; then \
       apt-get install -y python3.10 python3.10-venv python3.10-distutils && \
       # 버전 확인
       python3.10 --version; \
+    elif [ "$SERVER_TYPE" = "cloud" ]; then \
+          # SSH 서버 설치 및 클라우드(배스쳔 호스트) 설정
+          apt-get update && \
+          apt-get install -y openssh-server && \
+          mkdir /var/run/sshd && \
+          # 사용자 생성 및 SSH 설정
+          useradd -m -s /bin/bash bastion_user && \
+          echo "bastion_user:your_password" | chpasswd && \
+          mkdir -p /home/bastion_user/.ssh && \
+          chmod 700 /home/bastion_user/.ssh && \
+          # SSH 포트 노출
+          EXPOSE 22; \
     fi
+
 
 CMD ["sh", "-c", "echo Running $SERVER_TYPE server"]
