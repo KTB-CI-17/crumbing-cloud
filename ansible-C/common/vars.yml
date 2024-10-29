@@ -1,0 +1,3 @@
+# common/vars.yml
+docker_version: "20.10"
+docker_user: "{{ ansible_user }}"
