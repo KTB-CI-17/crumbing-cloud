@@ -1,0 +1,32 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVER_TYPE: backend
+    container_name: backend_server
+    volumes:
+      - ./config/backend-config:/app/config
+
+  ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVER_TYPE: ai
+    container_name: ai_server
+    volumes:
+      - ./config/ai-config:/app/config
+
+  cloud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVER_TYPE: cloud
+    container_name: cloud_server
+    volumes:
+      - ./config/cloud-config:/app/config

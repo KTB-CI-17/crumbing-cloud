@@ -1,0 +1,11 @@
+FROM ubuntu:20.04
+
+# 기본 패키지 설치
+RUN apt-get update && apt-get install -y \
+    curl \
+    vim \
+    software-properties-common \
+    && rm -rf /var/lib/apt/lists/*
+
+# 기본 환경 변수 (필요할 경우 추가 설정)
+ENV COMMON_ENV_VAR=value
