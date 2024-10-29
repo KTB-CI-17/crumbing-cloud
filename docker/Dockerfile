@@ -1,6 +1,6 @@
 # Dockerfile
 ARG SERVER_TYPE
-FROM ./Dockerfile.base AS base
+FROM ubuntu:latest AS base
 
 # 공통 작업
 WORKDIR /app
