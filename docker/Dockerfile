@@ -1,10 +1,16 @@
 # Dockerfile
-ARG SERVER_TYPE
+ARG SERVER_TYPE=backend
 FROM ubuntu:latest AS base
 
 # 공통 작업
 WORKDIR /app
-COPY config/${SERVER_TYPE}-config /app/config
+
+ENV SERVER_TYPE=${SERVER_TYPE}
+
+# 변수 확인을 위한 디버그 출력
+RUN echo "SERVER_TYPE is: ${SERVER_TYPE}"
+
+#COPY ./config/${SERVER_TYPE}-config /app/config
 
 # 서버별 의존성 설치
 RUN if [ "$SERVER_TYPE" = "backend" ]; then \
