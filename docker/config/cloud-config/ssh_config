@@ -1,5 +1,0 @@
-# ssh_config - SSH 설정
-Port ${SSH_PORT}
-PermitRootLogin no
-PasswordAuthentication yes
-AllowUsers ${BASTION_USER}
