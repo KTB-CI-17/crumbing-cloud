@@ -1,41 +1,110 @@
 # docker-compose.yml
-version: '3.9'
+version: '3.8'
 services:
   backend:
     build:
-      context: .
+      context: ../../cruming-server
       dockerfile: Dockerfile
-      args:
-        SERVER_TYPE: backend
-    image: backend_image
+    image: backend_app:latest
     container_name: backend_server
-    volumes:
-      - ./config/backend-config:/app/config
+#    volumes:
+#      - ./config/backend-config:/app/config
     ports:
       - "8080:8080"  #HTTP
+    environment:
+      - AI_SERVICE_URL = http://localhost:5000 # 추후 ai URL이 정해지면 변경
+    logging:
+      driver : "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 
   ai:
     build:
-      context: .
+      context: ../../cruming-ai
       dockerfile: Dockerfile
-      args:
-        SERVER_TYPE: ai
-    image: ai_image
+    image: ai_app:latest
     container_name: ai_server
     volumes:
-      - ./config/ai-config:/app/config
+      - ../../cruming-ai/model:/app/model
     ports:
       - "5000:5000"  #API
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
 
   cloud:
     build:
+#      context: ../../cruming-cloud
       context: .
       dockerfile: Dockerfile
-      args:
-        SERVER_TYPE: cloud
-    image: cloud_image
+    image: cloud_app:latest
     container_name: cloud_server
-    volumes:
-      - ./config/cloud-config:/app/config
     ports:
       - "22:22"   #SSH
+      - "9090:9090" #모니터링 웹 인터페이스 포트(Grafana)
+      - "5601:5601" #Kibana 웹 인터페이스 포트
+      - "3000:3000" #Grafana 웹 인터페이스 포트
+
+  elasticsearch:
+    image: elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana:7.17.10
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5602:5601"
+#    depends_on:
+#      - elasticsearch
+
+  fluentd:
+    image: fluent/fluentd:v1.16.3-debian-1.0
+    container_name: fluentd
+    volumes:
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+#    depends_on:
+#      - elasticsearch
+
+
+  prometheus:
+    image: prom/prometheus:v2.43.1
+    container_name: prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9091:9090"
+
+
+  grafana:
+    image: grafana/grafana-oss:9.5.3
+    container_name: grafana
+    ports:
+      - "3001:3000"
+#    depends_on:
+#      - prometheus
+
+volumes:
+  elasticsearch-data:
