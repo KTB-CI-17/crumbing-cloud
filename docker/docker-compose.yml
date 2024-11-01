@@ -78,7 +78,10 @@ services:
 #      - elasticsearch
 
   fluentd:
-    image: fluent/fluentd:v1.16.3-debian-1.0
+    build:
+      context: ./fluentd
+      dockerfile: Dockerfile
+    image: fluent_custom:latest #이미지 이름의 태그
     container_name: fluentd
     volumes:
       - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
