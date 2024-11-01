@@ -1,0 +1,18 @@
+---
+- hosts: public
+  vars_files:
+    - public/vars.yml
+  tasks:
+    - import_tasks: public/tasks.yml
+
+- hosts: master
+  vars_files:
+    - master/vars.yml
+  tasks:
+    - import_tasks: master/tasks.yml
+
+- hosts: worker
+  vars_files:
+    - worker/vars.yml
+  tasks:
+    - import_tasks: worker/tasks.yml
