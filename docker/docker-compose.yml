@@ -43,18 +43,6 @@ services:
 
 
 
-#  cloud:
-#    build:
-##      context: ../../cruming-cloud
-#      context: .
-#      dockerfile: Dockerfile
-#    image: cloud_app:latest
-#    container_name: cloud_server
-#    ports:
-#      - "22:22"   #SSH
-#      - "9090:9090" #모니터링 웹 인터페이스 포트(Grafana)
-#      - "5601:5601" #Kibana 웹 인터페이스 포트
-#      - "3000:3000" #Grafana 웹 인터페이스 포트
 
   elasticsearch:
     image: elasticsearch:7.17.10
