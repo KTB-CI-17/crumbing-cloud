@@ -61,7 +61,6 @@ services:
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
-#      - "5602:5601"
        - "5601:5601"
 #    depends_on:
 #      - elasticsearch
@@ -87,14 +86,12 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-#      - "9091:9090"
        - "9090:9090"
 
   grafana:
     image: grafana/grafana-oss:9.5.3
     container_name: grafana
     ports:
-#      - "3001:3000"
       - "3000:3000"
 #    depends_on:
 #      - prometheus
