@@ -87,6 +87,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
        - "9090:9090"
+    network_mode: host
 
   grafana:
     image: grafana/grafana-oss:9.5.3
@@ -95,6 +96,21 @@ services:
       - "3000:3000"
 #    depends_on:
 #      - prometheus
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: unless-stopped
+    network_mode: host  # 호스트 네트워크 모드 사용
+    pid: host  # 호스트의 PID 네임스페이스 사용
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
 
 volumes:
   elasticsearch-data:
