@@ -3,13 +3,13 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "name_fe" {
-  description = "프론트 보안 그룹 이름"
+variable "master_name" {
+  description = "마스터 보안 그룹 이름"
   type        = string
 }
 
-variable "ingress_fe" {
-  description = "프론트 인그레스 규칙"
+variable "master_ingress" {
+  description = "마스터 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -18,13 +18,13 @@ variable "ingress_fe" {
   }))
 }
 
-variable "name_be" {
-  description = "벡 보안 그룹 이름"
+variable "worker_name" {
+  description = "워커 보안 그룹 이름"
   type        = string
 }
 
-variable "ingress_be" {
-  description = "백 인그레스 규칙"
+variable "worker_ingress" {
+  description = "워커 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -33,28 +33,13 @@ variable "ingress_be" {
   }))
 }
 
-variable "name_ai" {
-  description = "ai 보안 그룹 이름"
+variable "bastion_name" {
+  description = "bastion 보안 그룹 이름"
   type        = string
 }
 
-variable "ingress_ai" {
-  description = "AI 인그레스 규칙"
-  type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-}
-
-variable "name_cloud" {
-  description = "클라우드 보안 그룹 이름"
-  type        = string
-}
-
-variable "ingress_cloud" {
-  description = "클라우드 인그레스 규칙"
+variable "bastion_ingress" {
+  description = "bastion 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -64,7 +49,7 @@ variable "ingress_cloud" {
 }
 
 variable "egress" {
-  description = "이그레스 규칙"
+  description = "모든 이그레스 규칙"
   type = object({
     from_port   = number
     to_port     = number

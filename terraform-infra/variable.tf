@@ -27,53 +27,56 @@ variable "igw_name" {
 
 
 # Subnet
-variable "subnet_fe" {
-  description = "프론트 서브넷"
-  type = object({
-    cidr = string
+variable "subnets" {
+  description = "서브넷 설정 목록"
+  type = map(object({
     az   = string
-    name = string
-  })
-}
-
-variable "subnet_be" {
-  description = "백 서브넷"
-  type = object({
     cidr = string
-    az   = string
     name = string
-  })
-}
-
-# Subnet
-variable "subnet_ai" {
-  description = "ai 서브넷"
-  type = object({
-    cidr = string
-    az   = string
-    name = string
-  })
-}
-
-variable "subnet_cloud" {
-  description = "클라우드 서브넷"
-  type = object({
-    cidr = string
-    az   = string
-    name = string
-  })
+  }))
 }
 
 
-# Nat Gateway
+
+# Nat Instance
 variable "nat_name" {
-  description = "NAT 게이트웨이 이름"
+  description = "NAT 이름"
   type        = string
+}
+
+variable "nat_sg_name" {
+  description = "NAT 보안그룹 이름"
+  type        = string
+}
+
+variable "nat_ami" {
+  description = "NAT AMI"
+  type        = string
+}
+
+variable "nat_ingress" {
+  description = "nat 인그레스 규칙"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
 }
 
 
 
 # Route Table
+variable "route_table_cidr_blocks" {
+  description = "라우트 cidr"
+  type        = list(string)
+}
+
+variable "route_table_public_name" {
+  description = "퍼블릭 라우트 테이블 이름"
+  type        = string
+}
+
 variable "route_table_private_name" {
   description = "프라이빗 라우트 테이블 이름"
   type        = string
@@ -82,28 +85,23 @@ variable "route_table_private_name" {
 
 
 # Security Group
-variable "sg_fe_name" {
-  description = "프론트 보안 그룹 이름"
+variable "sg_master_name" {
+  description = "마스터 보안 그룹 이름"
   type        = string
 }
 
-variable "sg_be_name" {
-  description = "백 보안 그룹 이름"
+variable "sg_worker_name" {
+  description = "워커 보안 그룹 이름"
   type        = string
 }
 
-variable "sg_ai_name" {
-  description = "ai 보안 그룹 이름"
+variable "sg_bastion_name" {
+  description = "배스천 호스트 보안 그룹 이름"
   type        = string
 }
 
-variable "sg_cloud_name" {
-  description = "클라우드 보안 그룹 이름"
-  type        = string
-}
-
-variable "ingress_fe" {
-  description = "프론트 인그레스 규칙"
+variable "sg_master_ingress" {
+  description = "마스터 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -112,8 +110,8 @@ variable "ingress_fe" {
   }))
 }
 
-variable "ingress_be" {
-  description = "백 인그레스 규칙"
+variable "sg_worker_ingress" {
+  description = "워커 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -122,8 +120,8 @@ variable "ingress_be" {
   }))
 }
 
-variable "ingress_ai" {
-  description = "ai 인그레스 규칙"
+variable "sg_bastion_ingress" {
+  description = "배스천 호스트 인그레스 규칙"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -132,17 +130,7 @@ variable "ingress_ai" {
   }))
 }
 
-variable "ingress_cloud" {
-  description = "클라우드 인그레스 규칙"
-  type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-}
-
-variable "egress" {
+variable "sg_egress" {
   description = "이그레스 규칙"
   type = object({
     from_port   = number
@@ -160,10 +148,20 @@ variable "ami" {
   type        = string
 }
 
-variable "instance_type" {
-  description = "인스턴스 유형"
+variable "instance_public_type" {
+  description = "퍼블릭 인스턴스 유형"
   type        = string
-  default     = "t2.micro"
+}
+
+variable "instance_node_type" {
+  description = "노드 인스턴스 유형"
+  type        = string
+}
+
+variable "instance_ai_type" {
+  description = "ai 인스턴스 유형"
+  type        = string
+  default     = "t3.medium"
 }
 
 variable "key_name" {
@@ -172,33 +170,28 @@ variable "key_name" {
   default     = "aws-ktb-key"
 }
 
-variable "instance_public_count" {
-  description = "퍼블릭 인스턴스의 수"
-  type        = number
-}
-
-variable "instance_private_count" {
-  description = "프라이빗 인스턴스의 수"
-  type        = number
-}
-
-variable "instance_fe_name" {
-  description = "프론트 인스턴스 이름"
+variable "instance_bastion_name" {
+  description = "배스천 인스턴스 이름"
   type        = string
 }
 
-variable "instance_be_name" {
-  description = "백 인스턴스 이름"
+variable "instance_master_name" {
+  description = "마스터 인스턴스 이름"
   type        = string
 }
 
-variable "instance_ai_name" {
-  description = "ai 인스턴스 이름"
+variable "instance_worker_1_name" {
+  description = "워커 1 인스턴스 이름"
   type        = string
 }
 
-variable "instance_cloud_name" {
-  description = "클라우드 인스턴스 이름"
+variable "instance_worker_2_name" {
+  description = "워커 2 인스턴스 이름"
+  type        = string
+}
+
+variable "instance_worker_ai_name" {
+  description = "워커 ai 인스턴스 이름"
   type        = string
 }
 

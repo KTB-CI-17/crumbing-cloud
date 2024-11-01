@@ -14,4 +14,4 @@
 /terraform-*/.terraform.tfstate.lock.info
 
 # Ansible
-/ansible-C/hosts.ini
+/ansible/hosts.ini

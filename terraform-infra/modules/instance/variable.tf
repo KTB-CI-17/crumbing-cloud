@@ -3,8 +3,18 @@ variable "ami" {
   type        = string
 }
 
-variable "instance_type" {
-  description = "인스턴스 타입"
+variable "instance_public_type" {
+  description = "퍼블릭 인스턴스 타입"
+  type        = string
+}
+
+variable "instance_node_type" {
+  description = "노드 인스턴스 타입"
+  type        = string
+}
+
+variable "instance_ai_type" {
+  description = "ai 인스턴스 타입"
   type        = string
 }
 

@@ -8,36 +8,30 @@ variable "igw_id" {
   type        = string
 }
 
-variable "nat_id" {
-  description = "NAT 게이트웨이의 ID"
+variable "nat_network_interface_id" {
+  description = "NAT 인스턴스의 네트워크 인터페이스 ID"
   type        = string
 }
 
-variable "subnet_temp_id" {
-  description = "임시 서브넷의 ID"
-  type        = string
+variable "public_subnet_ids" {
+  description = "퍼블릭 서브넷의 IDs"
+  type        = list(string)
 }
 
-variable "subnet_fe_id" {
-  description = "프론트 서브넷의 ID"
-  type        = string
+variable "private_subnet_ids" {
+  description = "프라이빗 서브넷의 IDs"
+  type        = list(string)
 }
 
-variable "subnet_be_id" {
-  description = "백 서브넷들의 ID"
-  type        = string
+variable "cidr" {
+  description = "라우트 cidr"
+  type        = list(string)
 }
 
-variable "subnet_ai_id" {
-  description = "AI 서브넷의 ID"
+variable "route_table_public_name" {
+  description = "퍼블릭 라우트 테이블 이름"
   type        = string
 }
-
-variable "subnet_cloud_id" {
-  description = "클라우드 서브넷의 ID"
-  type        = string
-}
-
 
 variable "route_table_private_name" {
   description = "프라이빗 라우트 테이블 이름"

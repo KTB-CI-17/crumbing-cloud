@@ -1,19 +1,14 @@
-output "sg_fe_id" {
-  description = "프론트 보안 그룹의 ID"
-  value       = aws_security_group.modules_sg_fe.id
+output "sg_bastion_id" {
+  description = "배스천 보안 그룹의 ID"
+  value       = aws_security_group.modules_sg_bastion.id
 }
 
-output "sg_be_id" {
-  description = "백 보안 그룹의 ID"
-  value       = aws_security_group.modules_sg_be.id
+output "sg_master_id" {
+  description = "마스터 보안 그룹의 ID"
+  value       = aws_security_group.modules_sg_master.id
 }
 
-output "sg_ai_id" {
-  description = "ai 보안 그룹 ID"
-  value       = aws_security_group.modules_sg_ai.id
-}
-
-output "sg_cloud_id" {
-  description = "클라우드 보안 그룹 ID"
-  value       = aws_security_group.modules_sg_cloud.id
+output "sg_worker_id" {
+  description = "worker 보안 그룹 ID"
+  value       = aws_security_group.modules_sg_worker.id
 }

@@ -1,24 +1,15 @@
-output "subnet_fe_id" {
-  description = "프론트 서브넷 ID"
-  value       = aws_subnet.modules_subnet_fe.id
+output "public_subnet_ids" {
+  description = "퍼블릭 서브넷 ID 리스트"
+  value = [
+    for k, v in aws_subnet.modules_subnet : v.id
+    if startswith(k, "public_")
+  ]
 }
 
-output "subnet_be_id" {
-  description = "백 서브넷 ID"
-  value       = aws_subnet.modules_subnet_be.id
-}
-
-output "subnet_ai_id" {
-  description = "AI 서브넷 ID"
-  value       = aws_subnet.modules_subnet_ai.id
-}
-
-output "subnet_cloud_id" {
-  description = "클라우드 서브넷 ID"
-  value       = aws_subnet.modules_subnet_cloud.id
-}
-
-output "subnet_temp_id" {
-  description = "백 서브넷 ID"
-  value       = aws_subnet.modules_subnet_temp.id
+output "private_subnet_ids" {
+  description = "프라이빗 서브넷 ID 리스트"
+  value = [
+    for k, v in aws_subnet.modules_subnet : v.id
+    if startswith(k, "private_")
+  ]
 }
