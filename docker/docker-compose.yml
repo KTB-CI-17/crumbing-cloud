@@ -43,18 +43,18 @@ services:
 
 
 
-  cloud:
-    build:
-#      context: ../../cruming-cloud
-      context: .
-      dockerfile: Dockerfile
-    image: cloud_app:latest
-    container_name: cloud_server
-    ports:
-      - "22:22"   #SSH
-      - "9090:9090" #모니터링 웹 인터페이스 포트(Grafana)
-      - "5601:5601" #Kibana 웹 인터페이스 포트
-      - "3000:3000" #Grafana 웹 인터페이스 포트
+#  cloud:
+#    build:
+##      context: ../../cruming-cloud
+#      context: .
+#      dockerfile: Dockerfile
+#    image: cloud_app:latest
+#    container_name: cloud_server
+#    ports:
+#      - "22:22"   #SSH
+#      - "9090:9090" #모니터링 웹 인터페이스 포트(Grafana)
+#      - "5601:5601" #Kibana 웹 인터페이스 포트
+#      - "3000:3000" #Grafana 웹 인터페이스 포트
 
   elasticsearch:
     image: elasticsearch:7.17.10
@@ -73,7 +73,8 @@ services:
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
-      - "5602:5601"
+#      - "5602:5601"
+       - "5601:5601"
 #    depends_on:
 #      - elasticsearch
 
@@ -98,14 +99,15 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9091:9090"
-
+#      - "9091:9090"
+       - "9090:9090"
 
   grafana:
     image: grafana/grafana-oss:9.5.3
     container_name: grafana
     ports:
-      - "3001:3000"
+#      - "3001:3000"
+      - "3000:3000"
 #    depends_on:
 #      - prometheus
 
