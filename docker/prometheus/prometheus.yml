@@ -13,7 +13,3 @@ scrape_configs:
   - job_name: 'ai'
     static_configs:
       - targets: ['ai:5000']
-
-  - job_name: 'cloud'
-    static_configs:
-      - targets: ['cloud:9090']
