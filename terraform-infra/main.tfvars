@@ -2,155 +2,131 @@
 region = "ap-northeast-2"
 
 
+
 # VPC
-vpc_cidr = "192.168.0.0/16"
+vpc_cidr = "10.0.0.0/16"
 vpc_name = "ktb-cruming-vpc"
+
 
 
 # Internet Gateway
 igw_name = "ktb-cruming-igw"
 
 
+
 # Subnet
-subnet_fe = {
-    cidr = "192.168.2.0/24"
+subnets = {
+  public_a = {
     az   = "ap-northeast-2a"
-    name = "ktb-cruming-subnet-fe"
-}
-
-subnet_be = {
-    cidr = "192.168.3.0/24"
+    cidr = "10.0.1.0/24"
+    name = "ktb-cruming-subnet-public-a"
+  }
+  public_c = {
     az   = "ap-northeast-2c"
-    name = "ktb-cruming-subnet-be"
+    cidr = "10.0.2.0/24"
+    name = "ktb-cruming-subnet-public-c"
+  }
+  private_a = {
+    az   = "ap-northeast-2a"
+    cidr = "10.0.11.0/24"
+    name = "ktb-cruming-subnet-private-a"
+  }
+  private_c = {
+    az   = "ap-northeast-2c"
+    cidr = "10.0.12.0/24"
+    name = "ktb-cruming-subnet-private-c"
+  }
 }
 
-subnet_ai = {
-  cidr = "192.168.4.0/24"
-  az   = "ap-northeast-2a"
-  name = "ktb-cruming-subnet-ai"
-}
-
-subnet_cloud = {
-  cidr = "192.168.5.0/24"
-  az   = "ap-northeast-2c"
-  name = "ktb-cruming-subnet-cloud"
-}
 
 
-# Nat Gateway
-nat_name = "ktb-cruming-nat"
+# Nat Instance
+nat_name              = "ktb-cruming-nat-instance"
+nat_sg_name           = "ktb-cruming-sg-nat"
+nat_ami               = "ami-01ad0c7a4930f0e43"
+nat_ingress = [
+  {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+]
 
 
 
 # Route Table
-route_table_private_name = "ktb-cruming-rt-private"
+route_table_public_name   = "ktb-cruming-rt-public"
+route_table_private_name  = "ktb-cruming-rt-private"
+route_table_cidr_blocks   = ["0.0.0.0/0"]
 
 
 
 # Security Group
-sg_fe_name = "ktb-cruming-sg-fe"
-sg_be_name = "ktb-cruming-sg-be"
-sg_ai_name = "ktb-cruming-sg-ai"
-sg_cloud_name = "ktb-cruming-sg-cloud"
+sg_master_name = "ktb-cruming-sg-master"
+sg_worker_name = "ktb-cruming-sg-worker"
+sg_bastion_name = "ktb-cruming-sg-bastion"
 
-ingress_fe = [
+
+sg_master_ingress = [
+  {
+    description = "Kubernetes API Server"
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "etcd server client API"
+    from_port   = 2379
+    to_port     = 2380
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Kubelet API"
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+]
+
+sg_worker_ingress = [
+  {
+    description = "Kubelet API"
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "NodePort Services"
+    from_port   = 30000
+    to_port     = 32767
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Calico/Container networking"
+    from_port   = 179
+    to_port     = 179
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+]
+
+sg_bastion_ingress = [
   {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-]
-
-ingress_be = [
-  {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8090
-    to_port     = 8090
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-]
-
-ingress_ai = [
-  {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-]
-
-ingress_cloud = [
-  {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
-    from_port   = 8090
-    to_port     = 8090
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
+  }
 ]
 
 
-egress = {
+sg_egress = {
   from_port   = 0
   to_port     = 0
   protocol    = "-1"
@@ -160,17 +136,17 @@ egress = {
 
 
 # Instance
-ami           = "ami-062cf18d655c0b1e8"
-instance_type = "t3.medium"
+ami           = "ami-040c33c6a51fd5d96"
+instance_public_type  = "t3.micro"
+instance_node_type    = "t3.medium"
+#instance_ai_type      = "g4dn.xlarge"
 key_name      = "ktb-cruming-key"
 
-instance_public_count  = 1
-instance_private_count = 3
-
-instance_fe_name = "ktb-cruming-fe"
-instance_be_name = "ktb-cruming-be"
-instance_ai_name = "ktb-cruming-ai"
-instance_cloud_name = "ktb-cruming-cloud"
+instance_bastion_name = "ktb-cruming-bastion"
+instance_master_name = "ktb-cruming-master"
+instance_worker_1_name = "ktb-cruming-worker-1"
+instance_worker_2_name = "ktb-cruming-worker-2"
+instance_worker_ai_name = "ktb-cruming-worker-ai"
 
 # S3
 s3_app_name = "ktb-cruming-app"

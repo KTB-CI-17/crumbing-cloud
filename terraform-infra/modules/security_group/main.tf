@@ -1,8 +1,8 @@
-resource "aws_security_group" "modules_sg_fe" {
+resource "aws_security_group" "modules_sg_bastion" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_fe
+    for_each = var.bastion_ingress
     content {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
@@ -19,46 +19,37 @@ resource "aws_security_group" "modules_sg_fe" {
   }
 
   tags = {
-    Name = var.name_fe
+    Name = var.bastion_name
   }
 }
 
-resource "aws_security_group" "modules_sg_be" {
-  vpc_id = var.vpc_id
-
-  dynamic "ingress" {
-    for_each = var.ingress_be
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
-    }
-  }
-
-  egress {
-    from_port   = var.egress.from_port
-    to_port     = var.egress.to_port
-    protocol    = var.egress.protocol
-    cidr_blocks = var.egress.cidr_blocks
-  }
-
-  tags = {
-    Name = var.name_be
+locals {
+  bastion_ssh = {
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = [aws_security_group.modules_sg_bastion.id]
   }
 }
 
-resource "aws_security_group" "modules_sg_ai" {
+resource "aws_security_group" "modules_sg_master" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_ai
+    for_each = var.master_ingress
     content {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
       cidr_blocks = ingress.value.cidr_blocks
     }
+  }
+
+  ingress {
+    from_port       = local.bastion_ssh.from_port
+    to_port         = local.bastion_ssh.to_port
+    protocol        = local.bastion_ssh.protocol
+    security_groups = local.bastion_ssh.security_groups
   }
 
   egress {
@@ -69,21 +60,28 @@ resource "aws_security_group" "modules_sg_ai" {
   }
 
   tags = {
-    Name = var.name_ai
+    Name = var.master_name
   }
 }
 
-resource "aws_security_group" "modules_sg_cloud" {
+resource "aws_security_group" "modules_sg_worker" {
   vpc_id = var.vpc_id
 
   dynamic "ingress" {
-    for_each = var.ingress_cloud
+    for_each = var.worker_ingress
     content {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
       cidr_blocks = ingress.value.cidr_blocks
     }
+  }
+
+  ingress {
+    from_port       = local.bastion_ssh.from_port
+    to_port         = local.bastion_ssh.to_port
+    protocol        = local.bastion_ssh.protocol
+    security_groups = local.bastion_ssh.security_groups
   }
 
   egress {
@@ -94,6 +92,6 @@ resource "aws_security_group" "modules_sg_cloud" {
   }
 
   tags = {
-    Name = var.name_cloud
+    Name = var.worker_name
   }
 }

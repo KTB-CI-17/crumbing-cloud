@@ -2,7 +2,7 @@ resource "aws_instance" "modules_instance_public" {
   for_each = var.public_instances
 
   ami                    = var.ami
-  instance_type          = var.instance_type
+  instance_type          = var.instance_public_type
   key_name               = var.key_name
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = each.value.security_group_ids
@@ -17,7 +17,7 @@ resource "aws_instance" "modules_instance_private" {
   for_each = var.private_instances
 
   ami                    = var.ami
-  instance_type          = var.instance_type
+  instance_type          = contains(split("-", each.value.instance_name), "ai") ? var.instance_ai_type : var.instance_node_type
   key_name               = var.key_name
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = each.value.security_group_ids

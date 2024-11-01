@@ -12,15 +12,19 @@ fi
 terraform apply -auto-approve planfile
 terraform output -json > terraform_output.json
 
-temp_ip=$(jq -r '.["ktb_cruming_public_instance"].value.ip[0]' terraform_output.json)
-back_ip=$(jq -r '.["ktb_cruming_private_instance"].value.ip[0]' terraform_output.json)
-front_ip=$(jq -r '.["ktb_cruming_private_instance"].value.ip[1]' terraform_output.json)
+bastion_ip=$(jq -r '.["ktb_cruming_public_instance"].value.bastion' terraform_output.json)
+master_ip=$(jq -r '.["ktb_cruming_private_instance"].value.master' terraform_output.json)
+worker1_ip=$(jq -r '.["ktb_cruming_private_instance"].value["worker-1"]' terraform_output.json)
+worker2_ip=$(jq -r '.["ktb_cruming_private_instance"].value["worker-2"]' terraform_output.json)
+worker_ai_ip=$(jq -r '.["ktb_cruming_private_instance"].value["worker-ai"]' terraform_output.json)
 
-echo "temp ip: $temp_ip"
-echo "front ip: $front_ip"
-echo "back ip: $back_ip"
+echo "bastion ip: $bastion_ip"
+echo "master ip: $master_ip"
+echo "worker1 ip: $worker1_ip"
+echo "worker2 ip: $worker2_ip"
+echo "worker-ai ip: $worker_ai_ip"
 
-cd ../ansible-C
+cd ../ansible
 
 if [ $? -ne 0 ]; then
   echo "Error: ../ansible 디렉토리를 찾을 수 없습니다."
@@ -28,12 +32,21 @@ if [ $? -ne 0 ]; then
 fi
 
 cat <<EOF > hosts.ini
-[frontend]
-$temp_ip
-$front_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/My/ktb/project/cruming/source/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/My/ktb/project/cruming/source/ktb-cruming-key.pem ubuntu@$temp_ip"'
+[public]
+$bastion_ip
 
-[backend]
-$back_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/My/ktb/project/cruming/source/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/My/ktb/project/cruming/source/ktb-cruming-key.pem ubuntu@$temp_ip"'
+[master]
+$master_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip"'
+
+[worker]
 EOF
+
+for ip in "$worker1_ip" "$worker2_ip" "$worker_ai_ip"; do
+   if [ "$ip" != "null" ] && [ ! -z "$ip" ]; then
+       echo "$ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand=\"ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip\"'" >> hosts.ini
+   fi
+done
+
+cat hosts.ini
 
 echo "hosts.ini 파일이 ../ansible 디렉토리에 생성되었습니다."
