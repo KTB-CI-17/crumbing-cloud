@@ -1,22 +1,34 @@
 global:
   scrape_interval: 15s
-  evaluation_interval: 15s
+  scrape_timeout: 15s
+  evaluation_interval: 2m
+
   external_labels:
     monitor: 'docker-monitor'
 
 scrape_configs:
+  # 프로메테우스 서버 자체를 스크레이핑하는 잡
   - job_name: 'prometheus'
     static_configs:
       - targets: ['prometheus:9090']
 
+  # 백엔드 서비스의 메트릭을 스크레이핑하는 잡
   - job_name: 'backend'
     static_configs:
       - targets: ['backend:8080']
 
+  # AI 서비스의 메트릭을 스크레이핑하는 잡
   - job_name: 'ai'
     static_configs:
       - targets: ['ai:5000']
 
+  # Node Exporter의 메트릭을 스크레이핑하는 잡
   - job_name: 'node-exporter'
+    scrape_interval: 10s
+    scrape_timeout: 10s
+    metrics_path: '/metrics'
+    scheme: 'http'
     static_configs:
-      - targets: [ 'localhost:9100' ]
+      - targets: [ 'node-exporter:9100' ]
+        labels:
+          service: 'monitor'

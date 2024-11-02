@@ -12,7 +12,7 @@ services:
     ports:
       - "8080:8080"  #HTTP
     environment:
-      - AI_SERVICE_URL = http://localhost:5000 # 추후 ai URL이 정해지면 변경
+      - AI_SERVICE_URL=http://localhost:5000 # 추후 ai URL이 정해지면 변경
     logging:
       driver : "json-file"
       options:
@@ -87,7 +87,6 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
        - "9090:9090"
-    network_mode: host
 
   grafana:
     image: grafana/grafana-oss:9.5.3
@@ -101,8 +100,8 @@ services:
     image: prom/node-exporter:latest
     container_name: node-exporter
     restart: unless-stopped
-    network_mode: host  # 호스트 네트워크 모드 사용
-    pid: host  # 호스트의 PID 네임스페이스 사용
+    ports:
+      - "9100:9100"
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
