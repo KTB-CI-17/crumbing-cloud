@@ -74,28 +74,28 @@ sg_master_ingress = [
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["0.0.0.0/16"]
   },
   {
     description = "Kubernetes API Server"
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
   {
     description = "etcd server client API"
     from_port   = 2379
     to_port     = 2380
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
   {
     description = "Kubelet API"
     from_port   = 10250
     to_port     = 10250
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
 ]
 
@@ -105,21 +105,21 @@ sg_worker_ingress = [
     from_port   = 10250
     to_port     = 10250
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
   {
     description = "NodePort Services"
     from_port   = 30000
     to_port     = 32767
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
   {
     description = "Calico/Container networking"
     from_port   = 179
     to_port     = 179
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   },
 ]
 
