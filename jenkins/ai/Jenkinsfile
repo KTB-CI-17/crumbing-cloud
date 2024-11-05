@@ -12,6 +12,17 @@ pipeline {
     }
 
     stages {
+        stage('PR Branch Filter') {
+            when {
+                expression {
+                    return env.CHANGE_TARGET == 'product'
+                }
+            }
+            steps {
+                echo "PR is targeting 'product' branch. Running pipeline..."
+            }
+        }
+
         stage('Git Checkout') {
             steps {
                 git branch: 'product',
