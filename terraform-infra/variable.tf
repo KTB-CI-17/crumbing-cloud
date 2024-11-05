@@ -170,6 +170,16 @@ variable "key_name" {
   default     = "aws-ktb-key"
 }
 
+variable "volume_size" {
+  description = "볼륨 크기"
+  type        = number
+}
+
+variable "volume_type" {
+  description = "볼륨 타입"
+  type        = string
+}
+
 variable "instance_bastion_name" {
   description = "배스천 인스턴스 이름"
   type        = string

@@ -35,18 +35,36 @@ cat <<EOF > hosts.ini
 [public]
 $bastion_ip
 
-[master]
+[cloud]
 $master_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip"'
 
-[worker]
+[ai]
+$worker_ai_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip"'
+
+[back]
 EOF
 
-for ip in "$worker1_ip" "$worker2_ip" "$worker_ai_ip"; do
+for ip in "$worker1_ip" "$worker2_ip"; do
    if [ "$ip" != "null" ] && [ ! -z "$ip" ]; then
        echo "$ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand=\"ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip\"'" >> hosts.ini
    fi
 done
 
 cat hosts.ini
+
+cat <<EOF > public/nginx/jenkins.conf
+server {
+   listen 8080;
+   server_name _;
+
+   location / {
+       proxy_pass http://$master_ip:8080;
+       proxy_set_header Host \$host;
+       proxy_set_header X-Real-IP \$remote_addr;
+       proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto \$scheme;
+   }
+}
+EOF
 
 echo "hosts.ini 파일이 ../ansible 디렉토리에 생성되었습니다."
