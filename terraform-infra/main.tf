@@ -71,12 +71,12 @@ module "security_group" {
 }
 
 module "instance" {
-  source                  = "./modules/instance"
-  ami                 = var.ami
+  source                = "./modules/instance"
+  ami                   = var.ami
   instance_public_type  = var.instance_public_type
-  instance_node_type  = var.instance_node_type
-  instance_ai_type    = var.instance_ai_type
-  key_name            = var.key_name
+  instance_node_type    = var.instance_node_type
+  instance_ai_type      = var.instance_ai_type
+  key_name              = var.key_name
 
   public_instances = {
     bastion = {

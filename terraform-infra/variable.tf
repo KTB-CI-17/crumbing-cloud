@@ -178,11 +178,13 @@ variable "instance_bastion_name" {
 variable "instance_master_name" {
   description = "마스터 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-cloud"
 }
 
 variable "instance_worker_1_name" {
   description = "워커 1 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-back"
 }
 
 variable "instance_worker_2_name" {
@@ -193,6 +195,7 @@ variable "instance_worker_2_name" {
 variable "instance_worker_ai_name" {
   description = "워커 ai 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-ai"
 }
 
 
