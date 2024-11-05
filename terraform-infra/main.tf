@@ -71,12 +71,12 @@ module "security_group" {
 }
 
 module "instance" {
-  source                  = "./modules/instance"
-  ami                 = var.ami
+  source                = "./modules/instance"
+  ami                   = var.ami
   instance_public_type  = var.instance_public_type
-  instance_node_type  = var.instance_node_type
-  instance_ai_type    = var.instance_ai_type
-  key_name            = var.key_name
+  instance_node_type    = var.instance_node_type
+  instance_ai_type      = var.instance_ai_type
+  key_name              = var.key_name
 
   public_instances = {
     bastion = {
@@ -92,21 +92,29 @@ module "instance" {
       subnet_id          = module.subnet.private_subnet_ids[0]
       security_group_ids = [module.security_group.sg_master_id]
       instance_name      = var.instance_master_name
+      volume_size        = var.volume_size
+      volume_type        = var.volume_type
     }
     worker-1 = {
       subnet_id          = module.subnet.private_subnet_ids[0]
       security_group_ids = [module.security_group.sg_worker_id]
       instance_name      = var.instance_worker_1_name
+      volume_size        = var.volume_size
+      volume_type        = var.volume_type
     }
 #    worker-2 = {
 #      subnet_id          = module.subnet.private_subnet_ids[1]
 #      security_group_ids = [module.security_group.sg_worker_id]
 #      instance_name      = var.instance_worker_2_name
+#      volume_size        = var.volume_size
+#      volume_type        = var.volume_type
 #    }
     worker-ai = {
       subnet_id           = module.subnet.private_subnet_ids[0]
       security_group_ids  = [module.security_group.sg_worker_id]
       instance_name       = var.instance_worker_ai_name
+      volume_size        = var.volume_size
+      volume_type        = var.volume_type
     }
   }
 }

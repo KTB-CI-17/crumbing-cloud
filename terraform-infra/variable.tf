@@ -170,6 +170,16 @@ variable "key_name" {
   default     = "aws-ktb-key"
 }
 
+variable "volume_size" {
+  description = "볼륨 크기"
+  type        = number
+}
+
+variable "volume_type" {
+  description = "볼륨 타입"
+  type        = string
+}
+
 variable "instance_bastion_name" {
   description = "배스천 인스턴스 이름"
   type        = string
@@ -178,11 +188,13 @@ variable "instance_bastion_name" {
 variable "instance_master_name" {
   description = "마스터 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-cloud"
 }
 
 variable "instance_worker_1_name" {
   description = "워커 1 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-back"
 }
 
 variable "instance_worker_2_name" {
@@ -193,6 +205,7 @@ variable "instance_worker_2_name" {
 variable "instance_worker_ai_name" {
   description = "워커 ai 인스턴스 이름"
   type        = string
+  default     = "ktb-cruming-ai"
 }
 
 

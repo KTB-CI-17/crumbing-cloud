@@ -1,2 +1,38 @@
----
-- import_tasks: ../common/tasks.yml
+#- import_tasks: ../common/tasks.yml
+- name: apt update
+  apt:
+    update_cache: yes
+
+- name: apt upgrade
+  apt:
+    upgrade: dist
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Copy jenkins.conf
+  copy:
+    src: nginx/jenkins.conf
+    dest: /etc/nginx/conf.d/jenkins.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Nginx
+
+- name: Test Nginx configuration
+  command: nginx -t
+  register: nginx_test
+  changed_when: false
+
+- name: Display Nginx test results
+  debug:
+    var: nginx_test.stderr_lines
+  when: nginx_test.rc != 0
+
+- name: Ensure Nginx service is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes

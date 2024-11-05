@@ -24,6 +24,12 @@ resource "aws_instance" "modules_instance_private" {
 
   associate_public_ip_address = false
 
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp2"
+    delete_on_termination = true
+  }
+
   tags = {
     Name = each.value.instance_name
   }

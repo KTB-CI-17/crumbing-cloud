@@ -63,57 +63,64 @@ route_table_cidr_blocks   = ["0.0.0.0/0"]
 
 
 # Security Group
-sg_master_name = "ktb-cruming-sg-master"
-sg_worker_name = "ktb-cruming-sg-worker"
+sg_master_name  = "ktb-cruming-sg-master"
+sg_worker_name  = "ktb-cruming-sg-worker"
 sg_bastion_name = "ktb-cruming-sg-bastion"
 
 
 sg_master_ingress = [
+  # 젠킨스
   {
-    description = "Kubernetes API Server"
-    from_port   = 6443
-    to_port     = 6443
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   },
-  {
-    description = "etcd server client API"
-    from_port   = 2379
-    to_port     = 2380
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  },
-  {
-    description = "Kubelet API"
-    from_port   = 10250
-    to_port     = 10250
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  },
+#  {
+#    description = "Kubernetes API Server"
+#    from_port   = 6443
+#    to_port     = 6443
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
+#  {
+#    description = "etcd server client API"
+#    from_port   = 2379
+#    to_port     = 2380
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
+#  {
+#    description = "Kubelet API"
+#    from_port   = 10250
+#    to_port     = 10250
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
 ]
 
 sg_worker_ingress = [
-  {
-    description = "Kubelet API"
-    from_port   = 10250
-    to_port     = 10250
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  },
-  {
-    description = "NodePort Services"
-    from_port   = 30000
-    to_port     = 32767
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  },
-  {
-    description = "Calico/Container networking"
-    from_port   = 179
-    to_port     = 179
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  },
+#  {
+#    description = "Kubelet API"
+#    from_port   = 10250
+#    to_port     = 10250
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
+#  {
+#    description = "NodePort Services"
+#    from_port   = 30000
+#    to_port     = 32767
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
+#  {
+#    description = "Calico/Container networking"
+#    from_port   = 179
+#    to_port     = 179
+#    protocol    = "tcp"
+#    cidr_blocks = ["10.0.0.0/16"]
+#  },
 ]
 
 sg_bastion_ingress = [
@@ -122,7 +129,14 @@ sg_bastion_ingress = [
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
+  },
+  {
+    from_port   = 9000
+    to_port     = 9000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  },
 ]
 
 
@@ -136,17 +150,19 @@ sg_egress = {
 
 
 # Instance
-ami           = "ami-040c33c6a51fd5d96"
+ami                   = "ami-040c33c6a51fd5d96"
 instance_public_type  = "t3.micro"
 instance_node_type    = "t3.medium"
 #instance_ai_type      = "g4dn.xlarge"
-key_name      = "ktb-cruming-key"
+key_name              = "ktb-cruming-key"
+volume_size           = 30
+volume_type           = "gp3"
 
-instance_bastion_name = "ktb-cruming-bastion"
-instance_master_name = "ktb-cruming-master"
-instance_worker_1_name = "ktb-cruming-worker-1"
-instance_worker_2_name = "ktb-cruming-worker-2"
-instance_worker_ai_name = "ktb-cruming-worker-ai"
+instance_bastion_name   = "ktb-cruming-bastion"
+#instance_master_name    = "ktb-cruming-master"
+#instance_worker_1_name  = "ktb-cruming-worker-1"
+instance_worker_2_name  = "ktb-cruming-worker-2"
+#instance_worker_ai_name = "ktb-cruming-worker-ai"
 
 # S3
 s3_app_name = "ktb-cruming-app"

@@ -37,8 +37,10 @@ variable "public_instances" {
 variable "private_instances" {
   description = "프라이빗 인스턴스 설정"
   type = map(object({
-    subnet_id          = string
-    security_group_ids = list(string)
-    instance_name      = string
+    subnet_id           = string
+    security_group_ids  = list(string)
+    instance_name       = string
+    volume_size         = number
+    volume_type         = string
   }))
 }
