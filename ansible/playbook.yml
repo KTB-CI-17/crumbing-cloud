@@ -4,15 +4,26 @@
     - public/vars.yml
   tasks:
     - import_tasks: public/tasks.yml
+#  handlers:
+#    - name: Restart Nginx
+#      service:
+#        name: nginx
+#        state: restarted
 
-- hosts: master
+- hosts: cloud
   vars_files:
     - master/vars.yml
   tasks:
     - import_tasks: master/tasks.yml
 
-- hosts: worker
+- hosts: back
   vars_files:
     - worker/vars.yml
   tasks:
     - import_tasks: worker/tasks.yml
+
+- hosts: ai
+  vars_files:
+    - ai/vars.yml
+  tasks:
+    - import_tasks: ai/tasks.yml
