@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'feature/docker-test',
+                git branch: 'product',
                     credentialsId: 'github_account',
                     url: "https://github.com/${REPO}.git"
             }
