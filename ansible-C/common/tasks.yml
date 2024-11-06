@@ -30,7 +30,7 @@
 
 - name: Install Docker
   apt:
-    name: "docker-ce={{ docker_version }}"
+    name: docker.io
     state: present
     update_cache: yes
 
@@ -49,7 +49,7 @@
 
 - name: Check Docker version
   command: docker --version
-  register: docker_version_output
+  register: docker_version
 
 - name: Display Docker version
   debug:
