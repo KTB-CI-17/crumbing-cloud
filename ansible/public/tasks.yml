@@ -1,4 +1,5 @@
-#- import_tasks: ../common/tasks.yml
+- import_tasks: ../common/tasks.yml
+
 - name: apt update
   apt:
     update_cache: yes
