@@ -32,3 +32,8 @@ scrape_configs:
       - targets: [ 'node-exporter:9100' ]
         labels:
           service: 'monitor'
+
+  # Elasticsearch Exporter의 메트릭을 스크레이핑하는 잡
+  - job_name: 'elasticsearch_exporter'
+    static_configs:
+      - targets: [ 'elasticsearch_exporter:9114' ]
