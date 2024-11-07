@@ -35,10 +35,17 @@
     state: restarted
     enabled: yes
 
+- name: Check if Jenkins initial admin password file exists
+  stat:
+    path: /var/lib/jenkins/secrets/initialAdminPassword
+  register: jenkins_password_file
+
 - name: Get Jenkins initial admin password
   command: cat /var/lib/jenkins/secrets/initialAdminPassword
   register: jenkins_admin_password
+  when: jenkins_password_file.stat.exists
+  ignore_errors: yes
 
 - name: Display Jenkins initial admin password
   debug:
-    msg: "Jenkins initial admin password: {{ jenkins_admin_password.stdout }}"
+    msg: "Jenkins initial admin password: {{ jenkins_admin_password.stdout if jenkins_password_file.stat.exists else 'Initial admin password file not found or already deleted.' }}"
