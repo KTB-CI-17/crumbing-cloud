@@ -69,12 +69,68 @@ sg_bastion_name = "ktb-cruming-sg-bastion"
 
 
 sg_master_ingress = [
-  # 젠킨스
   {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Jenkins"
+  },
+  {
+    from_port   = 9200
+    to_port     = 9200
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "ElasticSearch"
+  },
+  {
+    from_port   = 24224
+    to_port     = 24224
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Fluentd"
+  },
+  {
+    from_port   = 5601
+    to_port     = 5601
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Kibana"
+  },
+  {
+    from_port   = 9114
+    to_port     = 9114
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Elasticsearch-exporter"
+  },
+  {
+    from_port   = 9090
+    to_port     = 9090
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Prometheus"
+  },
+  {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Grafana"
+  },
+  {
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Node-exporter"
+  },
+  {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "SSH"
   },
 #  {
 #    description = "Kubernetes API Server"
@@ -100,6 +156,29 @@ sg_master_ingress = [
 ]
 
 sg_worker_ingress = [
+  # 백엔드
+  {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "back"
+  },
+  # ai
+  {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "ai"
+  },
+  {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "SSH"
+  },
 #  {
 #    description = "Kubelet API"
 #    from_port   = 10250
@@ -125,17 +204,32 @@ sg_worker_ingress = [
 
 sg_bastion_ingress = [
   {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  },
-  {
     from_port   = 9000
     to_port     = 9000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-
+    description = "Jenkins"
+  },
+  {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Back"
+  },
+  {
+    from_port   = 8000
+    to_port     = 8000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Ai"
+  },
+  {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "SSH"
   },
 ]
 

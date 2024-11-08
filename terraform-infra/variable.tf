@@ -107,6 +107,7 @@ variable "sg_master_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 
@@ -117,6 +118,7 @@ variable "sg_worker_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 
@@ -127,6 +129,7 @@ variable "sg_bastion_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 

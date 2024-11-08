@@ -15,6 +15,7 @@ variable "master_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 
@@ -30,6 +31,7 @@ variable "worker_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 
@@ -45,6 +47,7 @@ variable "bastion_ingress" {
     to_port     = number
     protocol    = string
     cidr_blocks = list(string)
+    description = string
   }))
 }
 
