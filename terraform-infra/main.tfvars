@@ -159,10 +159,10 @@ volume_size           = 30
 volume_type           = "gp3"
 
 instance_bastion_name   = "ktb-cruming-bastion"
-#instance_master_name    = "ktb-cruming-master"
-#instance_worker_1_name  = "ktb-cruming-worker-1"
+instance_master_name    = "ktb-cruming-master"
+instance_worker_1_name  = "ktb-cruming-worker-1"
 instance_worker_2_name  = "ktb-cruming-worker-2"
-#instance_worker_ai_name = "ktb-cruming-worker-ai"
+instance_worker_ai_name = "ktb-cruming-worker-ai"
 
 # S3
 s3_app_name = "ktb-cruming-app"

@@ -102,13 +102,13 @@ module "instance" {
       volume_size        = var.volume_size
       volume_type        = var.volume_type
     }
-#    worker-2 = {
-#      subnet_id          = module.subnet.private_subnet_ids[1]
-#      security_group_ids = [module.security_group.sg_worker_id]
-#      instance_name      = var.instance_worker_2_name
-#      volume_size        = var.volume_size
-#      volume_type        = var.volume_type
-#    }
+    worker-2 = {
+      subnet_id          = module.subnet.private_subnet_ids[1]
+      security_group_ids = [module.security_group.sg_worker_id]
+      instance_name      = var.instance_worker_2_name
+      volume_size        = var.volume_size
+      volume_type        = var.volume_type
+    }
     worker-ai = {
       subnet_id           = module.subnet.private_subnet_ids[0]
       security_group_ids  = [module.security_group.sg_worker_id]
