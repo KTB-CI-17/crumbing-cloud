@@ -35,13 +35,13 @@ cat <<EOF > hosts.ini
 [public]
 $bastion_ip
 
-[cloud]
+[master]
 $master_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip"'
 
 [ai]
 $worker_ai_ip ansible_user=ubuntu ansible_ssh_private_key_file=~/ktb-cruming-key.pem ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -i ~/ktb-cruming-key.pem ubuntu@$bastion_ip"'
 
-[back]
+[worker]
 EOF
 
 for ip in "$worker1_ip" "$worker2_ip"; do
