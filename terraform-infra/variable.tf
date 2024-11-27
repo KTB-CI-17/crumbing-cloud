@@ -100,9 +100,21 @@ variable "sg_bastion_name" {
   type        = string
 }
 
+variable "sg_bastion_ingress" {
+  description = "배스천 호스트 인그레스 규칙"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
 variable "sg_master_ingress" {
   description = "마스터 인그레스 규칙"
   type = list(object({
+    description = string
     from_port   = number
     to_port     = number
     protocol    = string
@@ -113,16 +125,7 @@ variable "sg_master_ingress" {
 variable "sg_worker_ingress" {
   description = "워커 인그레스 규칙"
   type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-}
-
-variable "sg_bastion_ingress" {
-  description = "배스천 호스트 인그레스 규칙"
-  type = list(object({
+    description = string
     from_port   = number
     to_port     = number
     protocol    = string

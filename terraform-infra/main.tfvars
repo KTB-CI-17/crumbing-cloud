@@ -69,15 +69,31 @@ sg_bastion_name = "ktb-cruming-sg-bastion"
 
 sg_bastion_ingress = [
   {
+    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   },
   {
+    description = "Http - test"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    description = "Https - test"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    description = "ping"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
     cidr_blocks = ["0.0.0.0/0"]
   },
 ]
@@ -104,6 +120,13 @@ sg_master_ingress = [
     protocol    = "udp"
     cidr_blocks = ["10.0.0.0/16"]
   },
+  {
+    description = "ping"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
 ]
 
 sg_worker_ingress = [
@@ -127,6 +150,13 @@ sg_worker_ingress = [
     to_port     = 8472
     protocol    = "udp"
     cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "ping"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
   },
 ]
 

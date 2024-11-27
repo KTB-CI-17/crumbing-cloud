@@ -4,6 +4,7 @@ resource "aws_security_group" "modules_sg_bastion" {
   dynamic "ingress" {
     for_each = var.bastion_ingress
     content {
+      description = ingress.value.description
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
@@ -25,6 +26,7 @@ resource "aws_security_group" "modules_sg_bastion" {
 
 locals {
   bastion_ssh = {
+    description     = "bastion sg"
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
@@ -38,6 +40,7 @@ resource "aws_security_group" "modules_sg_master" {
   dynamic "ingress" {
     for_each = var.master_ingress
     content {
+      description = ingress.value.description
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
@@ -46,6 +49,7 @@ resource "aws_security_group" "modules_sg_master" {
   }
 
   ingress {
+    description     = local.bastion_ssh.description
     from_port       = local.bastion_ssh.from_port
     to_port         = local.bastion_ssh.to_port
     protocol        = local.bastion_ssh.protocol
@@ -70,6 +74,7 @@ resource "aws_security_group" "modules_sg_worker" {
   dynamic "ingress" {
     for_each = var.worker_ingress
     content {
+      description = ingress.value.description
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
       protocol    = ingress.value.protocol
@@ -78,6 +83,7 @@ resource "aws_security_group" "modules_sg_worker" {
   }
 
   ingress {
+    description     = local.bastion_ssh.description
     from_port       = local.bastion_ssh.from_port
     to_port         = local.bastion_ssh.to_port
     protocol        = local.bastion_ssh.protocol

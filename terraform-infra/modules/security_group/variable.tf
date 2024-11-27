@@ -11,6 +11,7 @@ variable "master_name" {
 variable "master_ingress" {
   description = "마스터 인그레스 규칙"
   type = list(object({
+    description = string
     from_port   = number
     to_port     = number
     protocol    = string
@@ -26,6 +27,7 @@ variable "worker_name" {
 variable "worker_ingress" {
   description = "워커 인그레스 규칙"
   type = list(object({
+    description = string
     from_port   = number
     to_port     = number
     protocol    = string
@@ -41,6 +43,7 @@ variable "bastion_name" {
 variable "bastion_ingress" {
   description = "bastion 인그레스 규칙"
   type = list(object({
+    description = string
     from_port   = number
     to_port     = number
     protocol    = string
