@@ -66,6 +66,7 @@ route_table_cidr_blocks   = ["0.0.0.0/0"]
 sg_master_name  = "ktb-cruming-sg-master"
 sg_worker_name  = "ktb-cruming-sg-worker"
 sg_bastion_name = "ktb-cruming-sg-bastion"
+sg_nfs_name     = "ktb-cruming-sg-nfs"
 
 sg_bastion_ingress = [
   {
@@ -86,6 +87,13 @@ sg_bastion_ingress = [
     description = "Https - test"
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  },
+  {
+    description = "nginx - test"
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   },
@@ -160,6 +168,79 @@ sg_worker_ingress = [
   },
 ]
 
+sg_nfs_ingress = [
+  {
+    description = "NFS TCP port 2049"
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "NFS UDP port 2049"
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "RPC TCP port 111"
+    from_port   = 111
+    to_port     = 111
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "RPC UDP port 111"
+    from_port   = 111
+    to_port     = 111
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "rquotad TCP port 892"
+    from_port   = 892
+    to_port     = 892
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "rquotad UDP port 892"
+    from_port   = 892
+    to_port     = 892
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "mountd TCP port 875"
+    from_port   = 875
+    to_port     = 875
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "mountd UDP port 875"
+    from_port   = 875
+    to_port     = 875
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "statd TCP port 662"
+    from_port   = 662
+    to_port     = 662
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "statd UDP port 662"
+    from_port   = 662
+    to_port     = 662
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+]
+
 sg_egress = {
   from_port   = 0
   to_port     = 0
@@ -174,6 +255,8 @@ ami                   = "ami-040c33c6a51fd5d96"
 instance_public_type  = "t3.micro"
 instance_node_type    = "t3.medium"
 #instance_ai_type      = "g4dn.xlarge"
+instance_nfs_type     = "t3.small"
+
 key_name              = "ktb-cruming-key"
 volume_size           = 30
 volume_type           = "gp3"
@@ -183,6 +266,7 @@ instance_master_name    = "ktb-cruming-master"
 instance_worker_1_name  = "ktb-cruming-worker-1"
 instance_worker_2_name  = "ktb-cruming-worker-2"
 instance_worker_ai_name = "ktb-cruming-worker-ai"
+instance_nfs_name       = "ktb-cruming-nfs"
 
 # S3
 s3_app_name = "ktb-cruming-app"

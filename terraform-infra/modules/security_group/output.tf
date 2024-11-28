@@ -12,3 +12,8 @@ output "sg_worker_id" {
   description = "worker 보안 그룹 ID"
   value       = aws_security_group.modules_sg_worker.id
 }
+
+output "sg_nfs_id" {
+  description = "nfs 보안 그룹 ID"
+  value       = aws_security_group.modules_sg_nfs.id
+}

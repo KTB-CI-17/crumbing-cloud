@@ -100,6 +100,11 @@ variable "sg_bastion_name" {
   type        = string
 }
 
+variable "sg_nfs_name" {
+  description = "NFS 보안 그룹 이름"
+  type        = string
+}
+
 variable "sg_bastion_ingress" {
   description = "배스천 호스트 인그레스 규칙"
   type = list(object({
@@ -124,6 +129,17 @@ variable "sg_master_ingress" {
 
 variable "sg_worker_ingress" {
   description = "워커 인그레스 규칙"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
+variable "sg_nfs_ingress" {
+  description = "NFS 인그레스 규칙"
   type = list(object({
     description = string
     from_port   = number
@@ -165,6 +181,11 @@ variable "instance_ai_type" {
   description = "ai 인스턴스 유형"
   type        = string
   default     = "t3.medium"
+}
+
+variable "instance_nfs_type" {
+  description = "nfs 인스턴스 유형"
+  type        = string
 }
 
 variable "key_name" {
@@ -209,6 +230,11 @@ variable "instance_worker_ai_name" {
   description = "워커 ai 인스턴스 이름"
   type        = string
   default     = "ktb-cruming-ai"
+}
+
+variable "instance_nfs_name" {
+  description = "nfs 인스턴스 이름"
+  type        = string
 }
 
 

@@ -67,6 +67,8 @@ module "security_group" {
   worker_ingress  = var.sg_worker_ingress
   bastion_name    = var.sg_bastion_name
   bastion_ingress = var.sg_bastion_ingress
+  nfs_name        = var.sg_nfs_name
+  nfs_ingress     = var.sg_nfs_ingress
   egress          = var.sg_egress
 }
 
@@ -76,6 +78,7 @@ module "instance" {
   instance_public_type  = var.instance_public_type
   instance_node_type    = var.instance_node_type
   instance_ai_type      = var.instance_ai_type
+  instance_nfs_type     = var.instance_nfs_type
   key_name              = var.key_name
 
   public_instances = {
@@ -106,6 +109,13 @@ module "instance" {
       subnet_id          = module.subnet.private_subnet_ids[1]
       security_group_ids = [module.security_group.sg_worker_id]
       instance_name      = var.instance_worker_2_name
+      volume_size        = var.volume_size
+      volume_type        = var.volume_type
+    }
+    nfs = {
+      subnet_id          = module.subnet.private_subnet_ids[1]
+      security_group_ids = [module.security_group.sg_nfs_id]
+      instance_name      = var.instance_nfs_name
       volume_size        = var.volume_size
       volume_type        = var.volume_type
     }

@@ -18,6 +18,11 @@ variable "instance_ai_type" {
   type        = string
 }
 
+variable "instance_nfs_type" {
+  description = "nfs 인스턴스 타입"
+  type        = string
+}
+
 variable "key_name" {
   description = "SSH 키 이름"
   type        = string

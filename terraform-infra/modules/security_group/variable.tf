@@ -51,6 +51,22 @@ variable "bastion_ingress" {
   }))
 }
 
+variable "nfs_name" {
+  description = "nfs 보안 그룹 이름"
+  type        = string
+}
+
+variable "nfs_ingress" {
+  description = "NFS 인그레스 규칙"
+  type = list(object({
+    description = string
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
+}
+
 variable "egress" {
   description = "모든 이그레스 규칙"
   type = object({
