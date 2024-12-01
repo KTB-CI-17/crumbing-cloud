@@ -122,6 +122,27 @@ sg_master_ingress = [
     cidr_blocks = ["10.0.0.0/16"]
   },
   {
+    description = "kubelet API"
+    from_port   = 10250
+    to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "kube-scheduler API"
+    from_port   = 10259
+    to_port     = 10259
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "kube-controller-manager API"
+    from_port   = 10257
+    to_port     = 10257
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
     description = "Flannel VXLAN UDP"
     from_port   = 8472
     to_port     = 8472
@@ -129,19 +150,75 @@ sg_master_ingress = [
     cidr_blocks = ["10.0.0.0/16"]
   },
   {
+    description = "DNS Service - udp"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "DNS Service - tcp"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
     description = "ping"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Http - test"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Https - test"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   },
 ]
 
 sg_worker_ingress = [
   {
-    description = "Kubelet API"
+    description = "Kubernetes API Server"
+    from_port   = 6443
+    to_port     = 6443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "etcd server client API"
+    from_port   = 2379
+    to_port     = 2380
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "kubelet API"
     from_port   = 10250
     to_port     = 10250
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "kube-scheduler API"
+    from_port   = 10259
+    to_port     = 10259
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "kube-controller-manager API"
+    from_port   = 10257
+    to_port     = 10257
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/16"]
   },
@@ -160,11 +237,39 @@ sg_worker_ingress = [
     cidr_blocks = ["10.0.0.0/16"]
   },
   {
+    description = "DNS Service - udp"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "DNS Service - tcp"
+    from_port   = 53
+    to_port     = 53
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
     description = "ping"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Http - test"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "Https - test"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
   },
 ]
 
@@ -237,6 +342,13 @@ sg_nfs_ingress = [
     from_port   = 662
     to_port     = 662
     protocol    = "udp"
+    cidr_blocks = ["10.0.0.0/16"]
+  },
+  {
+    description = "ping"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
     cidr_blocks = ["10.0.0.0/16"]
   },
 ]
