@@ -52,19 +52,19 @@ done
 
 cat hosts.ini
 
-cat <<EOF > public/nginx/jenkins.conf
-server {
-   listen 8080;
-   server_name _;
-
-   location / {
-       proxy_pass http://$master_ip:8080;
-       proxy_set_header Host \$host;
-       proxy_set_header X-Real-IP \$remote_addr;
-       proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-       proxy_set_header X-Forwarded-Proto \$scheme;
-   }
-}
-EOF
+#cat <<EOF > public/nginx/kubernetes.conf
+#server {
+#   listen 8080;
+#   server_name _;
+#
+#   location / {
+#       proxy_pass http://$master_ip:8080;
+#       proxy_set_header Host \$host;
+#       proxy_set_header X-Real-IP \$remote_addr;
+#       proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+#       proxy_set_header X-Forwarded-Proto \$scheme;
+#   }
+#}
+#EOF
 
 echo "hosts.ini 파일이 ../ansible 디렉토리에 생성되었습니다."
