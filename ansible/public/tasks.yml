@@ -20,6 +20,15 @@
     mode: '0644'
   notify: Restart Nginx
 
+- name: Copy kibana.conf
+  copy:
+    src: nginx/kibana.conf
+    dest: /etc/nginx/conf.d/kibana.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Nginx
+
 - name: Test Nginx configuration
   command: nginx -t
   register: nginx_test

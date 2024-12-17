@@ -17,7 +17,7 @@ resource "aws_instance" "modules_instance_private" {
   for_each = var.private_instances
 
   ami                    = var.ami
-  instance_type = contains(split("-", each.value.instance_name), "ai") ? var.instance_ai_type : contains(split("-", each.value.instance_name), "nfs") ? var.instance_nfs_type : var.instance_node_type
+  instance_type = contains(split("-", each.value.instance_name), "ai") ? var.instance_ai_type : contains(split("-", each.value.instance_name), "nfs") ? var.instance_nfs_type : contains(split("-", each.value.instance_name), "master") ? var.instance_master_node_type : var.instance_node_type
   key_name               = var.key_name
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = each.value.security_group_ids
