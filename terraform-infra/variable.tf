@@ -172,8 +172,13 @@ variable "instance_public_type" {
   type        = string
 }
 
+variable "instance_master_node_type" {
+  description = "마스터 노드 인스턴스 유형"
+  type        = string
+}
+
 variable "instance_node_type" {
-  description = "노드 인스턴스 유형"
+  description = "워커 노드 인스턴스 유형"
   type        = string
 }
 
@@ -212,17 +217,25 @@ variable "instance_bastion_name" {
 variable "instance_master_name" {
   description = "마스터 인스턴스 이름"
   type        = string
-  default     = "ktb-cruming-cloud"
 }
 
 variable "instance_worker_1_name" {
   description = "워커 1 인스턴스 이름"
   type        = string
-  default     = "ktb-cruming-back"
 }
 
 variable "instance_worker_2_name" {
   description = "워커 2 인스턴스 이름"
+  type        = string
+}
+
+variable "instance_worker_3_name" {
+  description = "워커 3 인스턴스 이름"
+  type        = string
+}
+
+variable "instance_worker_4_name" {
+  description = "워커 4 인스턴스 이름"
   type        = string
 }
 

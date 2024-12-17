@@ -626,11 +626,11 @@ sg_egress = {
 
 
 # Instance
-ami                   = "ami-040c33c6a51fd5d96"
-instance_public_type  = "t3.micro"
-instance_node_type    = "t3.medium"
-#instance_ai_type      = "g4dn.xlarge"
-instance_nfs_type     = "t3.small"
+ami                       = "ami-040c33c6a51fd5d96"
+instance_public_type      = "t3.micro"
+instance_master_node_type = "t3.xlarge"
+instance_node_type        = "t3.large"
+instance_nfs_type         = "t3.small"
 
 key_name              = "ktb-cruming-key"
 volume_size           = 30
@@ -640,6 +640,8 @@ instance_bastion_name   = "ktb-cruming-bastion"
 instance_master_name    = "ktb-cruming-master"
 instance_worker_1_name  = "ktb-cruming-worker-1"
 instance_worker_2_name  = "ktb-cruming-worker-2"
+instance_worker_3_name  = "ktb-cruming-worker-3"
+instance_worker_4_name  = "ktb-cruming-worker-4"
 instance_worker_ai_name = "ktb-cruming-worker-ai"
 instance_nfs_name       = "ktb-cruming-nfs"
 

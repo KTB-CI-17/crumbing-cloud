@@ -8,8 +8,13 @@ variable "instance_public_type" {
   type        = string
 }
 
+variable "instance_master_node_type" {
+  description = "마스터 노드 인스턴스 타입"
+  type        = string
+}
+
 variable "instance_node_type" {
-  description = "노드 인스턴스 타입"
+  description = "워커 노드 인스턴스 타입"
   type        = string
 }
 
