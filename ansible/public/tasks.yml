@@ -1,15 +1,15 @@
-- name: apt update
-  apt:
-    update_cache: yes
-
-- name: apt upgrade
-  apt:
-    upgrade: dist
-
-- name: Install Nginx
-  apt:
-    name: nginx
-    state: present
+#- name: apt update
+#  apt:
+#    update_cache: yes
+#
+#- name: apt upgrade
+#  apt:
+#    upgrade: dist
+#
+#- name: Install Nginx
+#  apt:
+#    name: nginx
+#    state: present
 
 - name: Copy kubernetes.conf
   copy:
@@ -24,6 +24,24 @@
   copy:
     src: nginx/kibana.conf
     dest: /etc/nginx/conf.d/kibana.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Nginx
+
+- name: Copy grafana.conf
+  copy:
+    src: nginx/grafana.conf
+    dest: /etc/nginx/conf.d/grafana.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Nginx
+
+- name: Copy jenkins-server.conf
+  copy:
+    src: nginx/jenkins-server.conf
+    dest: /etc/nginx/conf.d/jenkins-server.conf
     owner: root
     group: root
     mode: '0644'
