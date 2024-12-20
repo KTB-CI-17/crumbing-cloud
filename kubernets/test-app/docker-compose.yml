@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  python-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: choiseu98/k8s-test-python-app:latest
-    container_name: python-app
