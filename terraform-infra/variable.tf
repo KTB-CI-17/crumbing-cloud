@@ -239,6 +239,11 @@ variable "instance_worker_4_name" {
   type        = string
 }
 
+variable "instance_worker_5_name" {
+  description = "워커 5 인스턴스 이름"
+  type        = string
+}
+
 variable "instance_worker_ai_name" {
   description = "워커 ai 인스턴스 이름"
   type        = string

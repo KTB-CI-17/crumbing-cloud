@@ -91,9 +91,9 @@ sg_bastion_ingress = [
     cidr_blocks = ["0.0.0.0/0"]
   },
   {
-    description = "nginx - test"
-    from_port   = 3000
-    to_port     = 3000
+    description = "jenkins"
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   },
@@ -642,6 +642,7 @@ instance_worker_1_name  = "ktb-cruming-worker-1"
 instance_worker_2_name  = "ktb-cruming-worker-2"
 instance_worker_3_name  = "ktb-cruming-worker-3"
 instance_worker_4_name  = "ktb-cruming-worker-4"
+instance_worker_5_name  = "ktb-cruming-worker-5"
 instance_worker_ai_name = "ktb-cruming-worker-ai"
 instance_nfs_name       = "ktb-cruming-nfs"
 
