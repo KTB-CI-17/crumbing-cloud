@@ -67,6 +67,11 @@ variable "nfs_ingress" {
   }))
 }
 
+variable "db_name" {
+  description = "db 보안 그룹 이름"
+  type        = string
+}
+
 variable "egress" {
   description = "모든 이그레스 규칙"
   type = object({

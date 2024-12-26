@@ -67,6 +67,7 @@ sg_master_name  = "ktb-cruming-sg-master"
 sg_worker_name  = "ktb-cruming-sg-worker"
 sg_bastion_name = "ktb-cruming-sg-bastion"
 sg_nfs_name     = "ktb-cruming-sg-nfs"
+sg_db_name      = "ktb-cruming-sg-db"
 
 sg_bastion_ingress = [
   {
@@ -135,6 +136,7 @@ sg_nfs_ingress = [
     cidr_blocks = ["10.0.0.0/16"]
   },
 ]
+
 #
 #sg_master_ingress = [
 #  # Kubernetes API Server
@@ -648,3 +650,16 @@ instance_nfs_name       = "ktb-cruming-nfs"
 
 # S3
 s3_app_name = "ktb-cruming-app"
+
+# RDS
+db_subnet_group_name = "ktb-cruming-subnet-group"
+db_allocated_storage = 20
+db_max_allocated_storage = 50
+db_engine = "mariadb"
+db_engine_version = "10.6"
+db_instance_class = "db.t3.medium"
+db_name = "ktb_cruming_17"
+db_username = "ktb_cruming_17"
+db_password = "ktb_cruming_17"
+db_parameter_group_name = "default.mariadb10.6"
+db_instance_name = "ktb-cruming-rds-mariadb"

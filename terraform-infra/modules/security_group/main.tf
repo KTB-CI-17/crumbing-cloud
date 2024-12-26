@@ -135,3 +135,40 @@ resource "aws_security_group" "modules_sg_nfs" {
     Name = var.nfs_name
   }
 }
+
+locals {
+  private_db = {
+    description     = "bastion sg"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [
+      aws_security_group.modules_sg_master.id,
+      aws_security_group.modules_sg_worker.id,
+      aws_security_group.modules_sg_nfs.id
+    ]
+  }
+}
+
+resource "aws_security_group" "modules_sg_db" {
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description     = local.private_db.description
+    from_port       = local.private_db.from_port
+    to_port         = local.private_db.to_port
+    protocol        = local.private_db.protocol
+    security_groups = local.private_db.security_groups
+  }
+
+  egress {
+    from_port   = var.egress.from_port
+    to_port     = var.egress.to_port
+    protocol    = var.egress.protocol
+    cidr_blocks = var.egress.cidr_blocks
+  }
+
+  tags = {
+    Name = var.db_name
+  }
+}
