@@ -23,3 +23,20 @@
 - brew install jq
 - chmod +x terraform_apply.sh
 - ./terraform_apply.sh
+
+
+```yaml
+**Firing**
+
+Value: A=43.644769232962005, B=0
+Labels:
+  - alertname = worker-4 memory usage
+  - grafana_folder = alert
+Annotations:
+  - summary = worker-ai : 메모리 60% 이상 사용중
+Source: https://grafana.cruming.site/alerting/grafana/fe7rdx5vbg45cb/view?orgId=1
+Silence: https://grafana.cruming.site/alerting/silence/new?alertmanager=grafana&matcher=alertname%3Dworker-ai+memory+usage&matcher=grafana_folder%3Dalert&orgId=1
+Dashboard: https://grafana.cruming.site/d/JABGX_-mzz?orgId=1
+Panel: https://grafana.cruming.site/d/JABGX_-mzz?orgId=1&viewPanel=4
+```
+

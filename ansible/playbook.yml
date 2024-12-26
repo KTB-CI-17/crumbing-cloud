@@ -13,11 +13,11 @@
 #- hosts: master
 #  vars_files:
 #    - common/vars.yml
-##    - master/vars.yml
+#    - master/vars.yml
 #  tasks:
 #    - import_tasks: common/tasks.yml
-##    - import_tasks: master/tasks.yml
-#
+#    - import_tasks: master/tasks.yml
+
 #- hosts: worker
 #  vars_files:
 #    - common/vars.yml

@@ -67,6 +67,7 @@ sg_master_name  = "ktb-cruming-sg-master"
 sg_worker_name  = "ktb-cruming-sg-worker"
 sg_bastion_name = "ktb-cruming-sg-bastion"
 sg_nfs_name     = "ktb-cruming-sg-nfs"
+sg_db_name      = "ktb-cruming-sg-db"
 
 sg_bastion_ingress = [
   {
@@ -91,9 +92,9 @@ sg_bastion_ingress = [
     cidr_blocks = ["0.0.0.0/0"]
   },
   {
-    description = "nginx - test"
-    from_port   = 3000
-    to_port     = 3000
+    description = "jenkins"
+    from_port   = 8080
+    to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   },
@@ -135,6 +136,7 @@ sg_nfs_ingress = [
     cidr_blocks = ["10.0.0.0/16"]
   },
 ]
+
 #
 #sg_master_ingress = [
 #  # Kubernetes API Server
@@ -642,8 +644,22 @@ instance_worker_1_name  = "ktb-cruming-worker-1"
 instance_worker_2_name  = "ktb-cruming-worker-2"
 instance_worker_3_name  = "ktb-cruming-worker-3"
 instance_worker_4_name  = "ktb-cruming-worker-4"
+instance_worker_5_name  = "ktb-cruming-worker-5"
 instance_worker_ai_name = "ktb-cruming-worker-ai"
 instance_nfs_name       = "ktb-cruming-nfs"
 
 # S3
 s3_app_name = "ktb-cruming-app"
+
+# RDS
+db_subnet_group_name = "ktb-cruming-subnet-group"
+db_allocated_storage = 20
+db_max_allocated_storage = 50
+db_engine = "mariadb"
+db_engine_version = "10.6"
+db_instance_class = "db.t3.medium"
+db_name = "ktb_cruming_17"
+db_username = "ktb_cruming_17"
+db_password = "ktb_cruming_17"
+db_parameter_group_name = "default.mariadb10.6"
+db_instance_name = "ktb-cruming-rds-mariadb"
