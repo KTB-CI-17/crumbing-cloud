@@ -69,6 +69,7 @@ module "security_group" {
   bastion_ingress = var.sg_bastion_ingress
   nfs_name        = var.sg_nfs_name
   nfs_ingress     = var.sg_nfs_ingress
+  db_name         = var.sg_db_name
   egress          = var.sg_egress
 }
 
@@ -157,4 +158,31 @@ module "s3" {
   bucket_names  = {
     app = var.s3_app_name
   }
+}
+
+# RDS
+module "db_subnet_group" {
+  source = "./modules/subnet_group"
+
+  db_subnet_group_name = var.db_subnet_group_name
+  private_subnet_ids   = module.subnet.private_subnet_ids
+}
+
+module "db_instance" {
+  source = "./modules/db_instance"
+
+  allocated_storage      = var.db_allocated_storage
+  max_allocated_storage  = var.db_max_allocated_storage
+  engine                 = var.db_engine
+  engine_version         = var.db_engine_version
+  instance_class         = var.db_instance_class
+  db_name                = var.db_name
+  username               = var.db_username
+  password               = var.db_password
+  parameter_group_name   = var.db_parameter_group_name
+  skip_final_snapshot    = true
+  publicly_accessible    = false
+  db_subnet_group_name   = module.db_subnet_group.db_subnet_group_name
+  vpc_security_group_ids = [module.security_group.sg_db_id]
+  db_instance_name       = var.db_instance_name
 }
